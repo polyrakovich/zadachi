@@ -83,9 +83,13 @@ const nameArray = document.querySelectorAll('.fullNameInputs > input');
 function getFullName() {
    let fullNameArray = fullName.value.split(' ');
    for (let i = 0; i < fullNameArray.length; i++) {
-      nameArray[i].value = fullNameArray[i];
+      if (fullNameArray.length === 3 && !fullNameArray.includes('')) {
+         nameArray[i].value = fullNameArray[i];
+      } else {
+         nameArray.forEach((input) => {input.value = ''});
+      }
+      console.log(nameArray)
    }
-   console.log(fullNameArray);
 }
 
 fullName.addEventListener('blur', getFullName);
