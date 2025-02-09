@@ -112,21 +112,25 @@ lowerName.addEventListener('blur', getUpperName);
 
 //7/////////////////////////////////////////////////////////////
 const howMany = document.querySelector('#howManyWords');
-const wordCount = document.getElementsByClassName('wordCount');
-
+const wordCount = document.querySelector('.wordCount');
+const countValue = document.createElement('span');
 //если инпут содержит значение, разбиваем строку на массив и считаем количество элементов
 //выводим количество в параграф
 
-function howManyWords() {
+function getWordsQuantity() {
    let wordCountResult = 0;
-if (howMany.value) {
-   wordCountResult += howMany.value.split(' ').length;
-   wordCount[0].append(`${wordCountResult}`);
- }
+   if (howMany.value) {
+   wordCountResult += howMany.value.split(' ').filter(Boolean).length;
+   countValue.textContent = wordCountResult.toString();
+
+   } else {
+   countValue.textContent = '0';
+}
    console.log(wordCountResult);
+   wordCount.appendChild(countValue);
 }
 
-howMany.addEventListener('blur', howManyWords);
+howMany.addEventListener('blur', getWordsQuantity);
 //8////////////////////////////////////////////////////////////////
 
 const theBiggest = document.getElementById('theBiggest');
