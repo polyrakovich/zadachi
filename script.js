@@ -103,7 +103,7 @@ const lowerName = document.getElementById('lowerName');
 //3)собираю массив обратно, уже с изменениями
 
 function getUpperName() {
-   const upperName = lowerName.value.split(' ').map(item => item.split('')[0].toUpperCase() + item.slice(1));
+   const upperName = lowerName.value.split(' ').map(item => item[0].toUpperCase() + item.slice(1));
    lowerName.value = upperName.join(' ');
    console.log(lowerName.value);
 }
