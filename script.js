@@ -55,6 +55,7 @@ order.addEventListener('blur', getSumOfInputNumbers);
 
 const mean = document.getElementById('mean');
 const meanSum = document.querySelector('.meanSum');
+const meanSumSpan = document.createElement('span');
 
 //сначала нахожу сумму, потом делю ее на длину массива
 
@@ -66,7 +67,8 @@ function getMeanSum() {
       meanSumValue += Number(meanItem);
       meanSumResult = meanSumValue / meanArray.length;
    }
-   meanSum.append(meanSumResult.toFixed(2));
+   meanSumSpan.textContent = meanSumResult.toFixed(2);
+   meanSum.appendChild(meanSumSpan);
 }
 
 mean.addEventListener('blur', getMeanSum);
@@ -135,6 +137,7 @@ howMany.addEventListener('blur', getWordsQuantity);
 
 const theBiggest = document.getElementById('theBiggest');
 const theBiggestResult = document.querySelector('.theBiggestResult');
+const spanResult = document.createElement('span');
 
 //разбиваем текст на массив, преобразуем массив строк в массив чисел, соответствующих длинам строк
 //редьюс сравнивает числа  и записывает большее
@@ -143,7 +146,8 @@ const theBiggestResult = document.querySelector('.theBiggestResult');
 function getBiggestLength() {
    let lengthArray = theBiggest.value.split(' ').map(lengthItem => lengthItem.length);
    let maxLength = lengthArray.reduce((maxLength, currentLength) => Math.max(maxLength, currentLength), -Infinity);
-   theBiggestResult.append(maxLength);
+   spanResult.innerText = maxLength.toString();
+   theBiggestResult.appendChild(spanResult);
 }
 
 theBiggest.addEventListener('blur', getBiggestLength);
@@ -217,16 +221,18 @@ userDate.addEventListener('blur', getDayOfTheWeek);
 const mirrorWord = document.getElementById('mirrorWord');
 const getMirrorWord = document.getElementById('getMirrorWord');
 const resultMirror = document.getElementById('resultMirror');
+const resultMirrorSpan = document.createElement('span')
 
 //разбиваем значение инпута на массив, меняем порядок элементов в массиве и соединяем, делаем проверку
 //делаем нечувствительным к регистру (toLowerCase())
 
 function isMirror() {
   if (mirrorWord.value.split('').reverse().join('').toLowerCase() === mirrorWord.value.toLowerCase()) {
-     resultMirror.append('да')
+     resultMirrorSpan.textContent = 'Да';
   }else{
-     resultMirror.append('нет')
+     resultMirrorSpan.textContent = 'Нет';
   }
+   resultMirror.appendChild(resultMirrorSpan);
 }
 
 getMirrorWord.addEventListener('click', isMirror);
@@ -242,10 +248,11 @@ includesThree.addEventListener('change', isThree);
 //14//////////////////////////////////////////////////////////////////////
 const serialNumber = document.getElementsByClassName('serialNumber');
 const getSerialNumbers = document.getElementById('getSerialNumbers');
+const serialNumberResult = document.getElementsByClassName('serialNumberResult')
 
 function getSerialSubsequence() {
    for (let i = 0; i < serialNumber.length; i++) {
-      serialNumber[i].append((i + 1).toString());
+      serialNumberResult[i].textContent = (i + 1).toString();
    }
 }
 
