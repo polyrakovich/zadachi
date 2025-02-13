@@ -192,16 +192,24 @@ getBirthYear.addEventListener('click', getUserAge);
 //11//////////////////////////////////////////////////////////////////
 const userDate = document.getElementById('userDate');
 const dayOfTheWeek = document.getElementById('dayOfTheWeek');
+const dayOfWeekResult = document.createElement('span');
 
 //получаем массив из значения инпута, приводим к аргументу для Date и получаем номер дня недели
 //меняем формат чтобы день недели выводился словом
 
 function getDayOfTheWeek() {
-   let correctDate = userDate.value.split('.').reverse().join(', ');
-   let date = new Date(correctDate);
-   let options = {weekday: 'long'};
-   let result = new Intl.DateTimeFormat('ru-RU', options).format(date);
-   dayOfTheWeek.append(result);
+   const pattern = /^\d{1,2}\.\d{1,2}\.\d{4}$/;
+   let check = pattern.test(userDate.value);
+   if (check) {
+      let correctDate = userDate.value.split('.').reverse().join(', ');
+      let date = new Date(correctDate);
+      let options = {weekday: 'long'};
+      let result = new Intl.DateTimeFormat('ru-RU', options).format(date);
+      dayOfWeekResult.textContent = result.toString();
+   } else {
+      dayOfWeekResult.textContent = 'Введен неверный формат даты';
+   }
+   dayOfTheWeek.appendChild(dayOfWeekResult);
 }
 
 userDate.addEventListener('blur', getDayOfTheWeek);
