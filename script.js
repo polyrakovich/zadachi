@@ -148,20 +148,28 @@ function getBiggestLength() {
 
 theBiggest.addEventListener('blur', getBiggestLength);
 //9////////////////////////////////////////////////////////////
-const wrongDate = document.getElementById('wrongDate');
+const dateInput = document.getElementById('dateInput');
+let check;
 
-//создаем массив с разделителем "."
-//реверсим и вновь собираем с разделителем "-"
+dateInput.addEventListener('input', (date) => {
+   date = dateInput.value;
+   const pattern = /^\d{1,2}\.\d{1,2}\.\d{4}$/;
+   check = pattern.test(date);
+   console.log(check);
+});
 
 function getCorrectDate() {
-   let correctDate = wrongDate.value.split('.').reverse();
-   wrongDate.value = correctDate.join('-');
-   if (correctDate.length > 3) {
-      wrongDate.value = 'wrong format';
+   if (check) {
+      let dateReverse = dateInput.value.split('.').reverse().join('-');
+      dateInput.value = dateReverse;
+      console.log(dateReverse);
+   } else {
+      dateInput.value = 'wrong date format';
    }
 }
 
-wrongDate.addEventListener('blur', getCorrectDate);
+dateInput.addEventListener('blur', getCorrectDate);
+
 //10///////////////////////////////////////////////////////////////
 const birthYear = document.getElementById('birthYear');
 const getBirthYear = document.getElementById('getBirthYear');
