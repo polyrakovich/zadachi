@@ -271,7 +271,7 @@ const hrefLink = document.querySelectorAll('.hrefLink');
 //как в предыдущем задании используем Array.from(), но теперь сразу добавляем к каждому айтему содержимое атрибута href и скобочки
 
 function addBraces() {
-   let array = Array.from(hrefLink, (item) => item.append(`(${item.getAttribute('href')})`));
+   Array.from(hrefLink, (item) => item.append(`(${item.getAttribute('href')})`));
 }
 
 window.addEventListener('load', addBraces);
