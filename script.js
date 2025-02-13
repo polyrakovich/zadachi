@@ -174,14 +174,18 @@ dateInput.addEventListener('blur', getCorrectDate);
 const birthYear = document.getElementById('birthYear');
 const getBirthYear = document.getElementById('getBirthYear');
 const userAge = document.getElementById('userAge');
-
+const userAgeResult = document.createElement('span');
 //получаем год методом getFullYear()
 //вычитаем из полученного года значение инпута -> получаем возраст
+let date = new Date();
 
 function getUserAge() {
-   let date = new Date();
-   let resultAge = date.getFullYear() - birthYear.value;
-   userAge.append(resultAge.toString());
+   if (birthYear.value !== undefined && 1915 <= birthYear.value && birthYear.value <= date) {
+      let resultAge = date.getFullYear() - birthYear.value;
+      userAgeResult.innerText = resultAge.toString();
+      userAge.appendChild(userAgeResult);
+      console.log(resultAge);
+   }
 }
 
 getBirthYear.addEventListener('click', getUserAge);
