@@ -226,8 +226,13 @@ const resultMirrorSpan = document.createElement('span')
 //разбиваем значение инпута на массив, меняем порядок элементов в массиве и соединяем, делаем проверку
 //делаем нечувствительным к регистру (toLowerCase())
 
-function isMirror() {
-  if (mirrorWord.value.split('').reverse().join('').toLowerCase() === mirrorWord.value.toLowerCase()) {
+function isMirror(str) {
+   str = mirrorWord.value
+       .toString() //если проверяем, является ли палиндромом число
+       .toLowerCase() //убираем чувствительность к регистру
+       .replace(/\s|[,.!?"/-]/g, ''); //заменяем в строке пробелы или знаки препинания пустотой, чтобв проверить предложения и словосочетания
+   console.log(str);
+  if (str.split('').reverse().join('') === str) {
      resultMirrorSpan.textContent = 'Да';
   }else{
      resultMirrorSpan.textContent = 'Нет';
@@ -236,6 +241,8 @@ function isMirror() {
 }
 
 getMirrorWord.addEventListener('click', isMirror);
+
+//
 //13/////////////////////////////////////////////////////////////////////
 const includesThree = document.getElementById('includesThree');
 const resultThree = document.getElementById('resultThree');
