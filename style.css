@@ -1,0 +1,12 @@
+.imageSizes {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.imageSize {
+    width: 130px;
+    transition: width 0.5s;
+}
+.width__2x {
+    width: 260px;
+}

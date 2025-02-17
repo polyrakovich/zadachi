@@ -312,9 +312,15 @@ for(let squareItem of squareArray) {
    squareItem.onclick = () => squareItem.innerHTML = Math.pow(+squareItem.innerText, 2).toString();
 }
 //20//////////////////////////////////////////////////////////////////////
-function changeSize() {
-   // document.querySelectorAll('.imageSize').forEach((item) => {item.setAttribute('width', '260')});
-   document.querySelectorAll('.imageSize').forEach((item) => {item.getAttribute('width');});
-   console.log();
+const imageReturningSize = document.querySelectorAll('.imageSize');
+for (let img of imageReturningSize) {
+
+   function changeSize() {
+      img.classList.toggle('width__2x');
+      img.classList.toggle('width__1x');
+      console.log(img);
+
+   }
+   img.addEventListener('click', changeSize);
 }
 
