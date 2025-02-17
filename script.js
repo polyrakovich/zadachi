@@ -311,6 +311,17 @@ let squareArray = Array.from(numberSquare);
 for(let squareItem of squareArray) {
    squareItem.onclick = () => squareItem.innerHTML = Math.pow(+squareItem.innerText, 2).toString();
 }
+//19//////////////////////////////////////////////////////////////////////
+const imageSizeInfinity = document.querySelectorAll('.imageSizeInfinity');
+
+for (let img of imageSizeInfinity) {
+   function changeSizeInfinity() {
+      let width = (+img.getAttribute('width') * 2).toString()
+      img.setAttribute('width', width)
+      console.log(img)
+   }
+   img.addEventListener('click', changeSizeInfinity);
+}
 //20//////////////////////////////////////////////////////////////////////
 const imageReturningSize = document.querySelectorAll('.imageSize');
 for (let img of imageReturningSize) {
