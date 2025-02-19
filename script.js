@@ -334,4 +334,16 @@ for (let img of imageReturningSize) {
    }
    img.addEventListener('click', changeSize);
 }
+//21//////////////////////////////////////////////////////////////////////
+const imageDuplicate = document.querySelectorAll('.imageDuplicate');
+const output = document.querySelector('.output');
+const imageOut = document.createElement('img');
+
+for (let img of imageDuplicate) {
+   img.onclick = function (event) {
+      console.log(output);
+      imageOut.src = event.target.src;
+      output.appendChild(imageOut);
+   }
+}
 
