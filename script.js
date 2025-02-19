@@ -346,4 +346,22 @@ for (let img of imageDuplicate) {
       output.appendChild(imageOut);
    }
 }
+//22////////////////////////////////////////////////////////////////////
+const positiveNumber = document.querySelector('#positiveNumber');
+const plusOne = document.querySelector('#plusOne');
+const minusOne = document.querySelector('#minusOne');
+
+   plusOne.addEventListener('click', () => {
+      positiveNumber.value = +positiveNumber.value + 1;
+      console.log(positiveNumber.value);
+   });
+
+   minusOne.addEventListener('click', () => {
+      if(positiveNumber.value > 0) {
+         positiveNumber.value = +positiveNumber.value - 1;
+      }else {
+         positiveNumber.value = 0;
+      }
+   });
+
 
