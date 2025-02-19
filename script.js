@@ -328,9 +328,7 @@ for (let img of imageReturningSize) {
 
    function changeSize() {
       img.classList.toggle('width__2x');
-      img.classList.toggle('width__1x');
       console.log(img);
-
    }
    img.addEventListener('click', changeSize);
 }
@@ -363,5 +361,25 @@ const minusOne = document.querySelector('#minusOne');
          positiveNumber.value = 0;
       }
    });
+//23/////////////////////////////////////////////////////////////////////
+const numberIncluding = document.querySelector('#numberIncluding');
 
+numberIncluding.addEventListener('input', numberValidation)
+function numberValidation() {
+   let num = numberIncluding.value;
+   console.log(num);
+   return num >= 1 && num <= 100;
+}
+
+   function checkNumber() {
+      console.log(numberIncluding);
+      if (numberValidation()) {
+         numberIncluding.classList.add('positive-value');
+         numberIncluding.classList.remove('negative-value');
+      } else {
+         numberIncluding.classList.add('negative-value');
+      }
+   }
+
+numberIncluding.addEventListener('blur', checkNumber)
 
