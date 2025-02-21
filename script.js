@@ -387,8 +387,25 @@ const copied = document.querySelector('#copied');
 
 function addCopiedText() {
    copied.value = window.getSelection().toString();
-   console.log(copied.value);
 }
 
 window.addEventListener('mouseup', addCopiedText);
+//25////////////////////////////////////////////////////////////////////
+const resultButton = document.querySelector('#changeColor');
+const sequenceOfNumbers = document.getElementsByClassName('sequenceOfNumbers');
+
+function  changeNumbersColor() {
+   let arr = Array.from(sequenceOfNumbers, (num) => num.innerText);
+   let maxNum = arr.reduce((maxNum, currentNum) => Math.max(maxNum, currentNum), -Infinity);
+   console.log(arr);
+   for (let para of sequenceOfNumbers) {
+      console.log(para);
+      if (+para.textContent === maxNum) {
+         para.classList.add('max-num');
+      }
+   }
+}
+
+resultButton.addEventListener('click', changeNumbersColor);
+
 

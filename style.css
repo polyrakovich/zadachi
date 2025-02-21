@@ -19,6 +19,11 @@
 .positive-value {
     box-shadow: green 0 0 10px;
 }
+
 .negative-value {
     box-shadow: red 0 0 10px;
+}
+
+.max-num {
+    color: red;
 }
