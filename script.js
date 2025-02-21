@@ -381,5 +381,14 @@ function numberValidation() {
       }
    }
 
-numberIncluding.addEventListener('blur', checkNumber)
+numberIncluding.addEventListener('blur', checkNumber);
+//24//////////////////////////////////////////////////////////////////
+const copied = document.querySelector('#copied');
+
+function addCopiedText() {
+   copied.value = window.getSelection().toString();
+   console.log(copied.value);
+}
+
+window.addEventListener('mouseup', addCopiedText);
 
