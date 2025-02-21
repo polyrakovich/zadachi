@@ -407,5 +407,16 @@ function  changeNumbersColor() {
 }
 
 resultButton.addEventListener('click', changeNumbersColor);
+//26//////////////////////////////////////////////////////////////////
+const paragraphs = document.querySelectorAll('.paragraphs');
+const counter = document.querySelector('#counter');
+let quantity = 1;
+
+for (let paragraph of paragraphs) {
+   paragraph.addEventListener('click', function() {
+      counter.value = quantity++;
+   });
+}
+
 
 
