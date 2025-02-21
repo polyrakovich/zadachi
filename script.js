@@ -417,6 +417,18 @@ for (let paragraph of paragraphs) {
       counter.value = quantity++;
    });
 }
+//27/////////////////////////////////////////////////////////////////////
+const square = document.querySelector('#square');
+
+function getSquarePerSecond() {
+   let value = square.value;
+   if (value !== 1 && value !== 0 && value !==  -1) {
+      setInterval(function run() {
+         square.value *= value;
+      }, 1000);
+   }
+}
+square.addEventListener('blur', getSquarePerSecond)
 
 
 
