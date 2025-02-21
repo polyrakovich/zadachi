@@ -428,7 +428,18 @@ function getSquarePerSecond() {
       }, 1000);
    }
 }
-square.addEventListener('blur', getSquarePerSecond)
+square.addEventListener('blur', getSquarePerSecond);
+//28/////////////////////////////////////////////////////////////////////
+const randomString = document.querySelector('#randomString');
+const generateRandomString = document.querySelector('#generateRandomString');
 
+generateRandomString.addEventListener('click', function () {
+   let result = '';
+   let characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+   for (let i = 0; i <= 8; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+   }
+   randomString.value = result;
+});
 
 
