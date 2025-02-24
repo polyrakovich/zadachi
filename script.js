@@ -436,10 +436,24 @@ const generateRandomString = document.querySelector('#generateRandomString');
 generateRandomString.addEventListener('click', function () {
    let result = '';
    let characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
-   for (let i = 0; i <= 8; i++) {
+   for (let i = 1; i <= 8; i++) {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
    }
    randomString.value = result;
+});
+//29///////////////////////////////////////////////////////////////////
+const randomSymbol = document.querySelector('#randomSymbols');
+const generateRandomSymbols = document.querySelector('#generateRandomSymbols');
+const stringLength = document.querySelector('#stringLength');
+
+generateRandomSymbols.addEventListener('click', function () {
+   let result = '';
+   let length = +stringLength.value;
+   let characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+   for (let i = 1; i <= length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+   }
+   randomSymbol.value = result;
 });
 
 
