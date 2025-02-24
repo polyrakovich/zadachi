@@ -506,6 +506,22 @@ function changeColor() {
 }
 
 window.addEventListener('load', changeColor);
+//32////////////////////////////////////////////////////////////////////
+const countdown = document.querySelector('#countdown');
 
+function startCountdown() {
+  let i = +countdown.value;
+   setInterval(function run() {
+      if (i >= 0) {
+            // let div = document.createElement('div');
+            // result.replaceWith(`${i--}`)
+            result.textContent = `${i--}`;
+         }
+      },1000)
+   let result = document.createElement('p');
+   countdown.after(result);
+}
+
+countdown.addEventListener('blur', startCountdown);
 
 
