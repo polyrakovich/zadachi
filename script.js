@@ -513,8 +513,6 @@ function startCountdown() {
   let i = +countdown.value;
    setInterval(function run() {
       if (i >= 0) {
-            // let div = document.createElement('div');
-            // result.replaceWith(`${i--}`)
             result.textContent = `${i--}`;
          }
       },1000)
@@ -523,5 +521,18 @@ function startCountdown() {
 }
 
 countdown.addEventListener('blur', startCountdown);
+//33///////////////////////////////////////////////////////////////////////
+const colorChangingArray = document.querySelector('#colorChangingArray');
 
+function changeColorFromArray() {
+   colorChangingArray.style.color = 'blue';
+   let arr = ['red', 'green', 'blue'];
+   let index = 0;
+   setInterval(function run() {
+      colorChangingArray.style.color = arr[index++];
+      index %= arr.length;
+   }, 1000)
+}
+
+window.addEventListener('load', changeColorFromArray);
 
