@@ -455,5 +455,41 @@ generateRandomSymbols.addEventListener('click', function () {
    }
    randomSymbol.value = result;
 });
+//30//////////////////////////////////////////////////////////////////////
+const numberOfSymbols = document.querySelector('#numberOfSymbols');
+const symbolsSubsequence = document.querySelector('#symbolsSubsequence');
+const generateString = document.querySelector('#generateString');
+const resultString = document.querySelector('#resultString');
+
+function validation() {
+   if (symbolsSubsequence.value.includes(' ')) {
+      symbolsSubsequence.classList.add('negative-value');
+      return false;
+   } else {
+      symbolsSubsequence.classList.remove('negative-value');
+      return true;
+   }
+}
+
+symbolsSubsequence.addEventListener('input', validation);
+
+generateString.addEventListener('click', function () {
+   console.log(symbolsSubsequence.value);
+   if (validation(symbolsSubsequence.value)) {
+      let result = '';
+      let length = +numberOfSymbols.value;
+      let characters = symbolsSubsequence.value;
+         if (characters.length >= length) {
+            for (let i = 1; i <= length; i++) {
+               result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+         resultString.value = result;
+         } else {
+            resultString.value = 'Ошибка';
+         }
+   } else {
+      resultString.value = 'Введите символы без пробелов';
+   }
+})
 
 
