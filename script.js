@@ -491,5 +491,21 @@ generateString.addEventListener('click', function () {
       resultString.value = 'Введите символы без пробелов';
    }
 })
+//31///////////////////////////////////////////////////////////////////
+const colorChanging = document.querySelector('#colorChanging');
+colorChanging.style.color = 'red';
+
+function changeColor() {
+     setInterval(function run() {
+        if(colorChanging.style.color === 'red') {
+           colorChanging.style.color = 'green';
+        } else {
+           colorChanging.style.color = 'red';
+        }
+     }, 1000);
+}
+
+window.addEventListener('load', changeColor);
+
 
 
