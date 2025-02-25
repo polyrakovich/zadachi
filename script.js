@@ -535,4 +535,21 @@ function changeColorFromArray() {
 }
 
 window.addEventListener('load', changeColorFromArray);
+//34//////////////////////////////////////////////////////////////////////
+const numberFromArray = document.querySelector('#numberFromArray');
+const nextString = document.querySelector('#nextString');
+let arrayOfNumbers = ['один', 'два', 'три'];
+let elemIndex = 0;
+
+window.addEventListener('load', function () {
+   numberFromArray.textContent = arrayOfNumbers[0];
+});
+
+function getElementFromArray(event) {
+   event.preventDefault();
+   elemIndex = (elemIndex + 1) % arrayOfNumbers.length;
+   numberFromArray.textContent = arrayOfNumbers[elemIndex];
+}
+
+nextString.addEventListener('click', getElementFromArray);
 
