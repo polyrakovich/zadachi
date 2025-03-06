@@ -63,17 +63,35 @@ const mean = document.getElementById('mean');
 const meanSum = document.querySelector('.meanSum');
 const meanSumSpan = document.createElement('span');
 
+mean.onclick = function() {
+   mean.classList.remove('negative-value');
+}
+
+mean.addEventListener('keypress', function(e) {
+   if (!/[\d,]/.test(e.key)) {
+      e.preventDefault();
+   }
+})
 //сначала нахожу сумму, потом делю ее на длину массива
 
 function getMeanSum() {
-   let meanArray = mean.value.split(',');
-   let meanSumValue = 0;
-   let meanSumResult = 0;
-   for(let meanItem of meanArray) {
-      meanSumValue += Number(meanItem);
-      meanSumResult = meanSumValue / meanArray.length;
+   mean.value = mean.value.replace(/,+/g, ', ');
+   let meanArray = mean.value.split(',').filter(Boolean);
+   console.log(meanArray);
+   if (!mean.value.includes(',') || meanArray.length <= 1) {
+      mean.classList.add('negative-value');
+      meanSumSpan.textContent = 'Введите числа через запятую';
+
    }
-   meanSumSpan.textContent = meanSumResult.toFixed(2);
+   else {
+      let meanSumValue = 0;
+      let meanSumResult = 0;
+      for (let meanItem of meanArray) {
+         meanSumValue += Number(meanItem);
+         meanSumResult = meanSumValue / meanArray.length;
+      }
+      meanSumSpan.textContent = meanSumResult.toFixed(2);
+   }
    meanSum.appendChild(meanSumSpan);
 }
 
