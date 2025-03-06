@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link href="style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 <h1>Task 1</h1>
@@ -14,7 +15,7 @@
 <input type="number" id="num2">
 <input type="number" id="num3">
 <button id="button">Result</button>
-<input type="number" id="sum">
+<input type="number" id="sum" disabled>
 
 <h1>Task 2</h1>
 
@@ -41,9 +42,9 @@
        margin-bottom: 1rem">
 
 <div class="fullNameInputs">
-<input id="firstName">
-<input id="lastName">
-<input id="secondName">
+<input id="firstName" disabled>
+<input id="lastName" disabled>
+<input id="secondName" disabled>
 </div>
 
 <h1>Task 6</h1>
@@ -53,7 +54,7 @@
 <h1>Task 7</h1>
 
 <input id="howManyWords" value="">
-<p class="wordCount">Количество слов =&nbsp</p>
+<p class="wordCount">Количество слов =</p>
 
 <h1>Task 8</h1>
 
@@ -62,11 +63,11 @@
 
 <h1>Task 9</h1>
 
-<input id="wrongDate" placeholder="31.12.2016">
+<input id="dateInput" placeholder="31.12.2016">
 
 <h1>Task 10</h1>
 
-<input placeholder="Введите год рождения" id="birthYear">
+<input placeholder="Введите год рождения" id="birthYear" type="number">
 <button id="getBirthYear">Узнать</button>
 <p id="userAge">Возраст пользователя = </p>
 
@@ -83,16 +84,16 @@
 
 <h1>Task 13</h1>
 
-<input id="includesThree" placeholder="Введите число">
+<input id="includesThree" placeholder="Введите число" type="number">
 <p id="resultThree">Содержит цифру 3? - </p>
 
 <h1>Task 14</h1>
 
-<p class="serialNumber">Абзац № </p>
-<p class="serialNumber">Абзац № </p>
-<p class="serialNumber">Абзац № </p>
-<p class="serialNumber">Абзац № </p>
-<p class="serialNumber">Абзац № </p>
+<p class="serialNumber">Абзац № <span class="serialNumberResult"></span></p>
+<p class="serialNumber">Абзац № <span class="serialNumberResult"></span></p>
+<p class="serialNumber">Абзац № <span class="serialNumberResult"></span></p>
+<p class="serialNumber">Абзац № <span class="serialNumberResult"></span></p>
+<p class="serialNumber">Абзац № <span class="serialNumberResult"></span></p>
 
 <button id="getSerialNumbers">Добавить порядковый номер</button>
 
@@ -125,11 +126,86 @@
 <p class="numberSquare">3</p>
 <p class="numberSquare">4</p>
 
-<h1>Task 20</h1>
+<h1>Task 19</h1>
+<img class="imageSizeInfinity" src="images/smile.png" alt="smile" width="130">
+<img class="imageSizeInfinity" src="images/zombie.png" alt="zombie" width="130">
+<img class="imageSizeInfinity" src="images/ninja.png" alt="ninja" width="130">
 
-<img class="imageSize" onclick="changeSize()"  src="images/smile.png" width="130">
-<img class="imageSize" onclick="changeSize()" src="images/zombie.png" width="130">
-<img class="imageSize" onclick="changeSize()" src="images/ninja.png" width="130">
+<h1>Task 20</h1>
+<div class="imageSizes">
+<img class="imageSize" src="images/smile.png" alt="smile">
+<img class="imageSize" src="images/zombie.png" alt="zombie">
+<img class="imageSize" src="images/ninja.png" alt="ninja">
+</div>
+
+<h1>Task 21</h1>
+<img class="imageDuplicate" src="images/smile.png" alt="smile" width="30">
+<img class="imageDuplicate" src="images/zombie.png" alt="zombie" width="30">
+<img class="imageDuplicate" src="images/ninja.png" alt="ninja" width="30">
+
+<div class="output"></div>
+
+<h1>Task 22</h1>
+<input id="positiveNumber" type="number" value="0">
+<button id="plusOne">+1</button>
+<button id="minusOne">-1</button>
+
+<h1>Task 23</h1>
+<input id="numberIncluding" type="number">
+
+<h1>Task 24</h1>
+<input id="copied">
+
+<h1>Task 25</h1>
+
+<p class="sequenceOfNumbers">1111</p>
+<p class="sequenceOfNumbers">22</p>
+<p class="sequenceOfNumbers">333</p>
+<p class="sequenceOfNumbers">4</p>
+<p class="sequenceOfNumbers">55555</p>
+
+<button id="changeColor">Самое большое число</button>
+
+<h1>Task 26</h1>
+
+<p class="paragraphs">Абзац 1</p>
+<p class="paragraphs">Абзац 2</p>
+<p class="paragraphs">Абзац 3</p>
+<p class="paragraphs">Абзац 4</p>
+<p class="paragraphs">Абзац 4</p>
+
+<input id="counter" value="0" disabled>
+
+<h1>Task 27</h1>
+<input id="square" type="number">
+
+<h1>Task 28</h1>
+<input id="randomString" type="text" disabled>
+<button id="generateRandomString">Сгенерировать</button>
+
+<h1>Task 29</h1>
+<input id="stringLength" type="number" placeholder="Введите длину случайной строки">
+<button id="generateRandomSymbols">Сгенерировать</button>
+<input id="randomSymbols" type="text" disabled>
+
+<h1>Task 30</h1>
+<input id="numberOfSymbols" type="number" placeholder="Введите длину случайной строки">
+<input id="symbolsSubsequence" type="text" placeholder="Символы без пробелов">
+<button id="generateString">Сгенерировать</button>
+<input id="resultString" type="text" disabled>
+
+<h1>Task 31</h1>
+<p id="colorChanging">Абзац, меняющий цвет каждую секунду</p>
+
+<h1>Task 32</h1>
+<input id="countdown" type="number">
+
+<h1>Task 33</h1>
+<p id="colorChangingArray">Абзац, меняющий цвет, цвета берет из массива</p>
+
+<h1>Task 34</h1>
+<p id="numberFromArray"></p>
+<a href="#" id="nextString">Следующая строка</a>
 
 <script src="script.js"></script>
 

@@ -1,0 +1,29 @@
+.imageSizes {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.imageSize {
+    width: 130px;
+    transition: width 0.5s;
+}
+.width__2x {
+    width: 260px;
+}
+
+.output img {
+    width: 50px;
+    height: 50px;
+}
+
+.positive-value {
+    box-shadow: green 0 0 10px;
+}
+
+.negative-value {
+    box-shadow: red 0 0 10px;
+}
+
+.max-num {
+    color: red;
+}

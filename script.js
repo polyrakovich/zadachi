@@ -55,6 +55,7 @@ order.addEventListener('blur', getSumOfInputNumbers);
 
 const mean = document.getElementById('mean');
 const meanSum = document.querySelector('.meanSum');
+const meanSumSpan = document.createElement('span');
 
 //сначала нахожу сумму, потом делю ее на длину массива
 
@@ -66,7 +67,8 @@ function getMeanSum() {
       meanSumValue += Number(meanItem);
       meanSumResult = meanSumValue / meanArray.length;
    }
-   meanSum.append(meanSumResult.toFixed(2));
+   meanSumSpan.textContent = meanSumResult.toFixed(2);
+   meanSum.appendChild(meanSumSpan);
 }
 
 mean.addEventListener('blur', getMeanSum);
@@ -83,9 +85,13 @@ const nameArray = document.querySelectorAll('.fullNameInputs > input');
 function getFullName() {
    let fullNameArray = fullName.value.split(' ');
    for (let i = 0; i < fullNameArray.length; i++) {
-      nameArray[i].value = fullNameArray[i];
+      if (fullNameArray.length === 3 && !fullNameArray.includes('')) {
+         nameArray[i].value = fullNameArray[i];
+      } else {
+         nameArray.forEach((input) => {input.value = ''});
+      }
+      console.log(nameArray)
    }
-   console.log(fullNameArray);
 }
 
 fullName.addEventListener('blur', getFullName);
@@ -99,7 +105,7 @@ const lowerName = document.getElementById('lowerName');
 //3)собираю массив обратно, уже с изменениями
 
 function getUpperName() {
-   const upperName = lowerName.value.split(' ').map(item => item.split('')[0].toUpperCase() + item.slice(1));
+   const upperName = lowerName.value.split(' ').map(item => item[0].toUpperCase() + item.slice(1));
    lowerName.value = upperName.join(' ');
    console.log(lowerName.value);
 }
@@ -108,25 +114,30 @@ lowerName.addEventListener('blur', getUpperName);
 
 //7/////////////////////////////////////////////////////////////
 const howMany = document.querySelector('#howManyWords');
-const wordCount = document.getElementsByClassName('wordCount');
-
+const wordCount = document.querySelector('.wordCount');
+const countValue = document.createElement('span');
 //если инпут содержит значение, разбиваем строку на массив и считаем количество элементов
 //выводим количество в параграф
 
-function howManyWords() {
+function getWordsQuantity() {
    let wordCountResult = 0;
-if (howMany.value) {
-   wordCountResult += howMany.value.split(' ').length;
-   wordCount[0].append(`${wordCountResult}`);
- }
+   if (howMany.value) {
+   wordCountResult += howMany.value.split(' ').filter(Boolean).length;
+   countValue.textContent = wordCountResult.toString();
+
+   } else {
+   countValue.textContent = '0';
+}
    console.log(wordCountResult);
+   wordCount.appendChild(countValue);
 }
 
-howMany.addEventListener('blur', howManyWords);
+howMany.addEventListener('blur', getWordsQuantity);
 //8////////////////////////////////////////////////////////////////
 
 const theBiggest = document.getElementById('theBiggest');
 const theBiggestResult = document.querySelector('.theBiggestResult');
+const spanResult = document.createElement('span');
 
 //разбиваем текст на массив, преобразуем массив строк в массив чисел, соответствующих длинам строк
 //редьюс сравнивает числа  и записывает большее
@@ -135,53 +146,74 @@ const theBiggestResult = document.querySelector('.theBiggestResult');
 function getBiggestLength() {
    let lengthArray = theBiggest.value.split(' ').map(lengthItem => lengthItem.length);
    let maxLength = lengthArray.reduce((maxLength, currentLength) => Math.max(maxLength, currentLength), -Infinity);
-   theBiggestResult.append(maxLength);
+   spanResult.innerText = maxLength.toString();
+   theBiggestResult.appendChild(spanResult);
 }
 
 theBiggest.addEventListener('blur', getBiggestLength);
 //9////////////////////////////////////////////////////////////
-const wrongDate = document.getElementById('wrongDate');
+const dateInput = document.getElementById('dateInput');
+let check;
 
-//создаем массив с разделителем "."
-//реверсим и вновь собираем с разделителем "-"
+dateInput.addEventListener('input', (date) => {
+   date = dateInput.value;
+   const pattern = /^\d{1,2}\.\d{1,2}\.\d{4}$/;
+   check = pattern.test(date);
+   console.log(check);
+});
 
 function getCorrectDate() {
-   let correctDate = wrongDate.value.split('.').reverse();
-   wrongDate.value = correctDate.join('-');
-   if (correctDate.length > 3) {
-      wrongDate.value = 'wrong format';
+   if (check) {
+      let dateReverse = dateInput.value.split('.').reverse().join('-');
+      dateInput.value = dateReverse;
+      console.log(dateReverse);
+   } else {
+      dateInput.value = 'wrong date format';
    }
 }
 
-wrongDate.addEventListener('blur', getCorrectDate);
+dateInput.addEventListener('blur', getCorrectDate);
+
 //10///////////////////////////////////////////////////////////////
 const birthYear = document.getElementById('birthYear');
 const getBirthYear = document.getElementById('getBirthYear');
 const userAge = document.getElementById('userAge');
-
+const userAgeResult = document.createElement('span');
 //получаем год методом getFullYear()
 //вычитаем из полученного года значение инпута -> получаем возраст
+let date = new Date();
 
 function getUserAge() {
-   let date = new Date();
-   let resultAge = date.getFullYear() - birthYear.value;
-   userAge.append(resultAge.toString());
+   if (birthYear.value !== undefined && 1915 <= birthYear.value && birthYear.value <= date) {
+      let resultAge = date.getFullYear() - birthYear.value;
+      userAgeResult.innerText = resultAge.toString();
+      userAge.appendChild(userAgeResult);
+      console.log(resultAge);
+   }
 }
 
 getBirthYear.addEventListener('click', getUserAge);
 //11//////////////////////////////////////////////////////////////////
 const userDate = document.getElementById('userDate');
 const dayOfTheWeek = document.getElementById('dayOfTheWeek');
+const dayOfWeekResult = document.createElement('span');
 
 //получаем массив из значения инпута, приводим к аргументу для Date и получаем номер дня недели
 //меняем формат чтобы день недели выводился словом
 
 function getDayOfTheWeek() {
-   let correctDate = userDate.value.split('.').reverse().join(', ');
-   let date = new Date(correctDate);
-   let options = {weekday: 'long'};
-   let result = new Intl.DateTimeFormat('ru-RU', options).format(date);
-   dayOfTheWeek.append(result);
+   const pattern = /^\d{1,2}\.\d{1,2}\.\d{4}$/;
+   let check = pattern.test(userDate.value);
+   if (check) {
+      let correctDate = userDate.value.split('.').reverse().join(', ');
+      let date = new Date(correctDate);
+      let options = {weekday: 'long'};
+      let result = new Intl.DateTimeFormat('ru-RU', options).format(date);
+      dayOfWeekResult.textContent = result.toString();
+   } else {
+      dayOfWeekResult.textContent = 'Введен неверный формат даты';
+   }
+   dayOfTheWeek.appendChild(dayOfWeekResult);
 }
 
 userDate.addEventListener('blur', getDayOfTheWeek);
@@ -189,19 +221,28 @@ userDate.addEventListener('blur', getDayOfTheWeek);
 const mirrorWord = document.getElementById('mirrorWord');
 const getMirrorWord = document.getElementById('getMirrorWord');
 const resultMirror = document.getElementById('resultMirror');
+const resultMirrorSpan = document.createElement('span')
 
 //разбиваем значение инпута на массив, меняем порядок элементов в массиве и соединяем, делаем проверку
 //делаем нечувствительным к регистру (toLowerCase())
 
-function isMirror() {
-  if (mirrorWord.value.split('').reverse().join('').toLowerCase() === mirrorWord.value.toLowerCase()) {
-     resultMirror.append('да')
+function isMirror(str) {
+   str = mirrorWord.value
+       .toString() //если проверяем, является ли палиндромом число
+       .toLowerCase() //убираем чувствительность к регистру
+       .replace(/\s|[,.!?"/-]/g, ''); //заменяем в строке пробелы или знаки препинания пустотой, чтобв проверить предложения и словосочетания
+   console.log(str);
+  if (str.split('').reverse().join('') === str) {
+     resultMirrorSpan.textContent = 'Да';
   }else{
-     resultMirror.append('нет')
+     resultMirrorSpan.textContent = 'Нет';
   }
+   resultMirror.appendChild(resultMirrorSpan);
 }
 
 getMirrorWord.addEventListener('click', isMirror);
+
+//
 //13/////////////////////////////////////////////////////////////////////
 const includesThree = document.getElementById('includesThree');
 const resultThree = document.getElementById('resultThree');
@@ -214,10 +255,11 @@ includesThree.addEventListener('change', isThree);
 //14//////////////////////////////////////////////////////////////////////
 const serialNumber = document.getElementsByClassName('serialNumber');
 const getSerialNumbers = document.getElementById('getSerialNumbers');
+const serialNumberResult = document.getElementsByClassName('serialNumberResult')
 
 function getSerialSubsequence() {
    for (let i = 0; i < serialNumber.length; i++) {
-      serialNumber[i].append((i + 1).toString());
+      serialNumberResult[i].textContent = (i + 1).toString();
    }
 }
 
@@ -243,7 +285,7 @@ const hrefLink = document.querySelectorAll('.hrefLink');
 //как в предыдущем задании используем Array.from(), но теперь сразу добавляем к каждому айтему содержимое атрибута href и скобочки
 
 function addBraces() {
-   let array = Array.from(hrefLink, (item) => item.append(`(${item.getAttribute('href')})`));
+   Array.from(hrefLink, (item) => item.append(`(${item.getAttribute('href')})`));
 }
 
 window.addEventListener('load', addBraces);
@@ -269,10 +311,245 @@ let squareArray = Array.from(numberSquare);
 for(let squareItem of squareArray) {
    squareItem.onclick = () => squareItem.innerHTML = Math.pow(+squareItem.innerText, 2).toString();
 }
-//20//////////////////////////////////////////////////////////////////////
-function changeSize() {
-   // document.querySelectorAll('.imageSize').forEach((item) => {item.setAttribute('width', '260')});
-   document.querySelectorAll('.imageSize').forEach((item) => {item.getAttribute('width');});
-   console.log();
+//19//////////////////////////////////////////////////////////////////////
+const imageSizeInfinity = document.querySelectorAll('.imageSizeInfinity');
+
+for (let img of imageSizeInfinity) {
+   function changeSizeInfinity() {
+      let width = (+img.getAttribute('width') * 2).toString()
+      img.setAttribute('width', width)
+      console.log(img)
+   }
+   img.addEventListener('click', changeSizeInfinity);
 }
+//20//////////////////////////////////////////////////////////////////////
+const imageReturningSize = document.querySelectorAll('.imageSize');
+for (let img of imageReturningSize) {
+
+   function changeSize() {
+      img.classList.toggle('width__2x');
+      console.log(img);
+   }
+   img.addEventListener('click', changeSize);
+}
+//21//////////////////////////////////////////////////////////////////////
+const imageDuplicate = document.querySelectorAll('.imageDuplicate');
+const output = document.querySelector('.output');
+const imageOut = document.createElement('img');
+
+for (let img of imageDuplicate) {
+   img.onclick = function (event) {
+      console.log(output);
+      imageOut.src = event.target.src;
+      output.appendChild(imageOut);
+   }
+}
+//22////////////////////////////////////////////////////////////////////
+const positiveNumber = document.querySelector('#positiveNumber');
+const plusOne = document.querySelector('#plusOne');
+const minusOne = document.querySelector('#minusOne');
+
+   plusOne.addEventListener('click', () => {
+      positiveNumber.value = +positiveNumber.value + 1;
+      console.log(positiveNumber.value);
+   });
+
+   minusOne.addEventListener('click', () => {
+      if(positiveNumber.value > 0) {
+         positiveNumber.value = +positiveNumber.value - 1;
+      }else {
+         positiveNumber.value = 0;
+      }
+   });
+//23/////////////////////////////////////////////////////////////////////
+const numberIncluding = document.querySelector('#numberIncluding');
+
+numberIncluding.addEventListener('input', numberValidation)
+function numberValidation() {
+   let num = numberIncluding.value;
+   console.log(num);
+   return num >= 1 && num <= 100;
+}
+
+   function checkNumber() {
+      console.log(numberIncluding);
+      if (numberValidation()) {
+         numberIncluding.classList.add('positive-value');
+         numberIncluding.classList.remove('negative-value');
+      } else {
+         numberIncluding.classList.add('negative-value');
+      }
+   }
+
+numberIncluding.addEventListener('blur', checkNumber);
+//24//////////////////////////////////////////////////////////////////
+const copied = document.querySelector('#copied');
+
+function addCopiedText() {
+   copied.value = window.getSelection().toString();
+}
+
+window.addEventListener('mouseup', addCopiedText);
+//25////////////////////////////////////////////////////////////////////
+const resultButton = document.querySelector('#changeColor');
+const sequenceOfNumbers = document.getElementsByClassName('sequenceOfNumbers');
+
+function  changeNumbersColor() {
+   let arr = Array.from(sequenceOfNumbers, (num) => num.innerText);
+   let maxNum = arr.reduce((maxNum, currentNum) => Math.max(maxNum, currentNum), -Infinity);
+   console.log(arr);
+   for (let para of sequenceOfNumbers) {
+      console.log(para);
+      if (+para.textContent === maxNum) {
+         para.classList.add('max-num');
+      }
+   }
+}
+
+resultButton.addEventListener('click', changeNumbersColor);
+//26//////////////////////////////////////////////////////////////////
+const paragraphs = document.querySelectorAll('.paragraphs');
+const counter = document.querySelector('#counter');
+let quantity = 1;
+
+for (let paragraph of paragraphs) {
+   paragraph.addEventListener('click', function() {
+      counter.value = quantity++;
+   });
+}
+//27/////////////////////////////////////////////////////////////////////
+const square = document.querySelector('#square');
+
+function getSquarePerSecond() {
+   let value = square.value;
+   if (value !== 1 && value !== 0 && value !==  -1) {
+      setInterval(function run() {
+         square.value *= value;
+      }, 1000);
+   }
+}
+square.addEventListener('blur', getSquarePerSecond);
+//28/////////////////////////////////////////////////////////////////////
+const randomString = document.querySelector('#randomString');
+const generateRandomString = document.querySelector('#generateRandomString');
+
+generateRandomString.addEventListener('click', function () {
+   let result = '';
+   let characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+   for (let i = 1; i <= 8; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+   }
+   randomString.value = result;
+});
+//29///////////////////////////////////////////////////////////////////
+const randomSymbol = document.querySelector('#randomSymbols');
+const generateRandomSymbols = document.querySelector('#generateRandomSymbols');
+const stringLength = document.querySelector('#stringLength');
+
+generateRandomSymbols.addEventListener('click', function () {
+   let result = '';
+   let length = +stringLength.value;
+   let characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+   for (let i = 1; i <= length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+   }
+   randomSymbol.value = result;
+});
+//30//////////////////////////////////////////////////////////////////////
+const numberOfSymbols = document.querySelector('#numberOfSymbols');
+const symbolsSubsequence = document.querySelector('#symbolsSubsequence');
+const generateString = document.querySelector('#generateString');
+const resultString = document.querySelector('#resultString');
+
+function validation() {
+   if (symbolsSubsequence.value.includes(' ')) {
+      symbolsSubsequence.classList.add('negative-value');
+      return false;
+   } else {
+      symbolsSubsequence.classList.remove('negative-value');
+      return true;
+   }
+}
+
+symbolsSubsequence.addEventListener('input', validation);
+
+generateString.addEventListener('click', function () {
+   console.log(symbolsSubsequence.value);
+   if (validation(symbolsSubsequence.value)) {
+      let result = '';
+      let length = +numberOfSymbols.value;
+      let characters = symbolsSubsequence.value;
+         if (characters.length >= length) {
+            for (let i = 1; i <= length; i++) {
+               result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+         resultString.value = result;
+         } else {
+            resultString.value = 'Ошибка';
+         }
+   } else {
+      resultString.value = 'Введите символы без пробелов';
+   }
+})
+//31///////////////////////////////////////////////////////////////////
+const colorChanging = document.querySelector('#colorChanging');
+colorChanging.style.color = 'red';
+
+function changeColor() {
+     setInterval(function run() {
+        if(colorChanging.style.color === 'red') {
+           colorChanging.style.color = 'green';
+        } else {
+           colorChanging.style.color = 'red';
+        }
+     }, 1000);
+}
+
+window.addEventListener('load', changeColor);
+//32////////////////////////////////////////////////////////////////////
+const countdown = document.querySelector('#countdown');
+
+function startCountdown() {
+  let i = +countdown.value;
+   setInterval(function run() {
+      if (i >= 0) {
+            result.textContent = `${i--}`;
+         }
+      },1000)
+   let result = document.createElement('p');
+   countdown.after(result);
+}
+
+countdown.addEventListener('blur', startCountdown);
+//33///////////////////////////////////////////////////////////////////////
+const colorChangingArray = document.querySelector('#colorChangingArray');
+
+function changeColorFromArray() {
+   colorChangingArray.style.color = 'blue';
+   let arr = ['red', 'green', 'blue'];
+   let index = 0;
+   setInterval(function run() {
+      colorChangingArray.style.color = arr[index++];
+      index %= arr.length;
+   }, 1000)
+}
+
+window.addEventListener('load', changeColorFromArray);
+//34//////////////////////////////////////////////////////////////////////
+const numberFromArray = document.querySelector('#numberFromArray');
+const nextString = document.querySelector('#nextString');
+let arrayOfNumbers = ['один', 'два', 'три'];
+let elemIndex = 0;
+
+window.addEventListener('load', function () {
+   numberFromArray.textContent = arrayOfNumbers[0];
+});
+
+function getElementFromArray(event) {
+   event.preventDefault();
+   elemIndex = (elemIndex + 1) % arrayOfNumbers.length;
+   numberFromArray.textContent = arrayOfNumbers[elemIndex];
+}
+
+nextString.addEventListener('click', getElementFromArray);
 
