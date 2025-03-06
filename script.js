@@ -36,6 +36,12 @@ const order = document.getElementById('order');
 const sumOfNumbers = document.querySelector('.sumResult');
 const span = document.createElement('span');
 
+order.addEventListener('keypress', function(e) {
+   if (!/[0-9]/.test(e.key)) {
+      e.preventDefault();
+   }
+});
+
 function getSumOfInputNumbers() {
    let orderArray = order.value.split('');
    let orderSum = 0;
