@@ -493,13 +493,14 @@ const generateString = document.querySelector('#generateString');
 const resultString = document.querySelector('#resultString');
 
 function validation() {
-   if (symbolsSubsequence.value.includes(' ')) {
+   if (symbolsSubsequence.value === '' || symbolsSubsequence.value.includes(' ')) {
       symbolsSubsequence.classList.add('negative-value');
       return false;
    } else {
       symbolsSubsequence.classList.remove('negative-value');
       return true;
    }
+
 }
 
 symbolsSubsequence.addEventListener('input', validation);
@@ -510,14 +511,10 @@ generateString.addEventListener('click', function () {
       let result = '';
       let length = +numberOfSymbols.value;
       let characters = symbolsSubsequence.value;
-         if (characters.length >= length) {
-            for (let i = 1; i <= length; i++) {
+         for (let i = 1; i <= length; i++) {
                result += characters.charAt(Math.floor(Math.random() * characters.length));
             }
          resultString.value = result;
-         } else {
-            resultString.value = 'Ошибка';
-         }
    } else {
       resultString.value = 'Введите символы без пробелов';
    }
