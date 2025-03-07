@@ -270,9 +270,15 @@ getMirrorWord.addEventListener('click', isMirror);
 //13/////////////////////////////////////////////////////////////////////
 const includesThree = document.getElementById('includesThree');
 const resultThree = document.getElementById('resultThree');
+const resultThreeSpan = document.createElement('span')
+resultThree.append(resultThreeSpan);
 
 const isThree = function () {
-   return includesThree.value.includes(3) ? resultThree.append('yes') : resultThree.append('no');
+   if (includesThree.value === '') {
+      resultThreeSpan.textContent = 'Введите любое число';
+   }else {
+      return includesThree.value.includes(3) ? resultThreeSpan.textContent = 'yes' : resultThreeSpan.textContent = 'no';
+   }
 }
 
 includesThree.addEventListener('change', isThree);
