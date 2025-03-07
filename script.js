@@ -466,7 +466,7 @@ const generateRandomString = document.querySelector('#generateRandomString');
 
 generateRandomString.addEventListener('click', function () {
    let result = '';
-   let characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+   const characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
    for (let i = 1; i <= 8; i++) {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
    }
@@ -480,7 +480,7 @@ const stringLength = document.querySelector('#stringLength');
 generateRandomSymbols.addEventListener('click', function () {
    let result = '';
    let length = +stringLength.value;
-   let characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+   const characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
    for (let i = 1; i <= length; i++) {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
    }
@@ -550,7 +550,7 @@ const colorChangingArray = document.querySelector('#colorChangingArray');
 
 function changeColorFromArray() {
    colorChangingArray.style.color = 'blue';
-   let arr = ['red', 'green', 'blue'];
+   const arr = ['red', 'green', 'blue'];
    let index = 0;
    setInterval(function run() {
       colorChangingArray.style.color = arr[index++];
@@ -562,7 +562,7 @@ window.addEventListener('load', changeColorFromArray);
 //34//////////////////////////////////////////////////////////////////////
 const numberFromArray = document.querySelector('#numberFromArray');
 const nextString = document.querySelector('#nextString');
-let arrayOfNumbers = ['один', 'два', 'три'];
+const arrayOfNumbers = ['один', 'два', 'три'];
 let elemIndex = 0;
 
 window.addEventListener('load', function () {
