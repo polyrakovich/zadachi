@@ -453,12 +453,13 @@ const square = document.querySelector('#square');
 function getSquarePerSecond() {
    let value = square.value;
    if (value !== 1 && value !== 0 && value !==  -1) {
-      setInterval(function run() {
+      setTimeout(function run() {
          square.value *= value;
+         setTimeout(run, 1000);
       }, 1000);
    }
 }
-square.addEventListener('blur', getSquarePerSecond);
+square.addEventListener('change', getSquarePerSecond);
 //28/////////////////////////////////////////////////////////////////////
 const randomString = document.querySelector('#randomString');
 const generateRandomString = document.querySelector('#generateRandomString');
