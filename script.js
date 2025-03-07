@@ -210,7 +210,7 @@ let date = new Date();
 function getUserAge() {
    if (birthYear.value !== undefined && 1915 <= birthYear.value && birthYear.value <= date) {
       let resultAge = date.getFullYear() - birthYear.value;
-      userAgeResult.innerText = resultAge.toString();
+      userAgeResult.innerText = `${resultAge - 1} или ${resultAge}`;
       userAge.appendChild(userAgeResult);
       console.log(resultAge);
    }
