@@ -609,4 +609,13 @@ const addChecked = document.querySelector('#addChecked');
 addChecked.addEventListener('click', function () {
    checkboxes.forEach(checkbox => checkbox.checked = true);
 });
+//38////////////////////////////////////////////////////////////////////
+const radios = document.querySelectorAll('.radios');
+const reply = document.querySelector('#reply');
+
+radios.forEach(radio => radio.addEventListener('change', function () {
+   if (radio.checked) {
+      reply.append(radio.getAttribute('id') + ' ');
+   }
+}));
 
