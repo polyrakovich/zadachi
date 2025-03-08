@@ -592,4 +592,14 @@ setInterval(function run() {
 }
 
 window.addEventListener('load', startCount);
+//36//////////////////////////////////////////////////////////////////
+const checkboxChecked = document.querySelector('#checkboxChecked');
+const changeCheckbox = document.querySelector('#changeCheckbox');
+
+function changeState (e) {
+   e.preventDefault();
+   return checkboxChecked.checked ? checkboxChecked.removeAttribute('checked') : checkboxChecked.setAttribute('checked', 'checked');
+}
+
+changeCheckbox.addEventListener('click', changeState)
 
