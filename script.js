@@ -601,5 +601,12 @@ function changeState (e) {
    return checkboxChecked.checked ? checkboxChecked.removeAttribute('checked') : checkboxChecked.setAttribute('checked', 'checked');
 }
 
-changeCheckbox.addEventListener('click', changeState)
+changeCheckbox.addEventListener('click', changeState);
+//37/////////////////////////////////////////////////////////////////
+const checkboxes = document.querySelectorAll('.checkboxUnchecked');
+const addChecked = document.querySelector('#addChecked');
+
+addChecked.addEventListener('click', function () {
+   checkboxes.forEach(checkbox => checkbox.checked = true);
+});
 
