@@ -576,4 +576,20 @@ function getElementFromArray(event) {
 }
 
 nextString.addEventListener('click', getElementFromArray);
+//35/////////////////////////////////////////////////////////////////
+const counterArray = document.querySelectorAll('.counter');
+let i = 0;
+let num = 0;
+
+function startCount() {
+setInterval(function run() {
+   counterArray[i].value = num + 1;
+   num++;
+   i++;
+   i %= counterArray.length;
+   }, 1000)
+
+}
+
+window.addEventListener('load', startCount);
 
