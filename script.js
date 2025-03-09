@@ -618,4 +618,22 @@ radios.forEach(radio => radio.addEventListener('change', function () {
       reply.append(radio.getAttribute('id') + ' ');
    }
 }));
+//39//////////////////////////////////////////////////////////////
+const checks = document.querySelectorAll('.checks');
+const replyCheck = document.querySelector('#replyCheck');
+let p = document.createElement('p');
+let array = [];
 
+checks.forEach(check => check.addEventListener('change', function () {
+   let checked = check.getAttribute('name');
+   if(check.checked && !array.includes(checked)) {
+      array.push(checked);
+      console.log(array);
+
+   } else if (!check.checked && array.includes(checked)) {
+      let i = array.indexOf(checked);
+      array.splice(i, 1);
+   }
+   p.textContent = array.join(' ');
+   replyCheck.after(p);
+}))
