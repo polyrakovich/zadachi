@@ -634,6 +634,18 @@ checks.forEach(check => check.addEventListener('change', function () {
       let i = array.indexOf(checked);
       array.splice(i, 1);
    }
-   p.textContent = array.join(' ');
+   p.textContent = array.join(', ');
    replyCheck.after(p);
 }))
+//40///////////////////////////////////////////////////////////////
+const whatLang = document.querySelector('#whatLang');
+const visibleInput = document.querySelector('#visibleInput');
+
+whatLang.addEventListener('change', function () {
+   if (whatLang.checked) {
+      visibleInput.style.display = 'inline-block';
+      console.log(visibleInput);
+   } else {
+      visibleInput.style.display = 'none';
+   }
+})
