@@ -672,3 +672,27 @@ hiddens.forEach(hidden => hidden.addEventListener('change', function () {
       })
    }
 }))
+//42/////////////////////////////////////////////////////////////////
+const liNumber = document.querySelector('#liNumber');
+const ol = document.querySelectorAll('.ol');
+let errorTrack = document.createElement('p');
+liNumber.after(errorTrack);
+
+liNumber.addEventListener('input', function () {
+   console.log(liNumber.value);
+   const olArr = Array.from(ol);
+   let index = +liNumber.value - 1;
+   let liValue = liNumber.value;
+   if (liValue > 5 || liValue <= 0 && liValue !== '') {
+      errorTrack.textContent = 'Введите число от 1 до 5';
+   } else {
+      errorTrack.textContent = '';
+   }
+   for (let li of ol) {
+      if (olArr.indexOf(li) === index) {
+         li.style.color = 'red';
+      } else {
+         li.style.color = 'black';
+      }
+   }
+})
