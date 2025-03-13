@@ -733,3 +733,11 @@ manipulations.forEach(manipulation => {
       }
    })
 })
+//44//////////////////////////////////////////////////////////////////
+const close = document.querySelectorAll('.close');
+
+close.forEach(button => {
+   button.addEventListener('click', function () {
+      button.closest('div').style.display = 'none';
+   })
+})
