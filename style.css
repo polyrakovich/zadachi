@@ -27,3 +27,7 @@
 .max-num {
     color: red;
 }
+.fieldset {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+}

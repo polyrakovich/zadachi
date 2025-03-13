@@ -644,8 +644,31 @@ const visibleInput = document.querySelector('#visibleInput');
 whatLang.addEventListener('change', function () {
    if (whatLang.checked) {
       visibleInput.style.display = 'inline-block';
-      console.log(visibleInput);
    } else {
       visibleInput.style.display = 'none';
    }
 })
+//41////////////////////////////////////////////////////////////////////
+const hiddens = document.querySelectorAll('.hidden');
+const labels = document.querySelectorAll('.visible');
+
+hiddens.forEach(hidden => hidden.addEventListener('change', function () {
+
+   if (hidden.checked) {
+      let attr = hidden.getAttribute('id');
+      console.log(attr);
+      Array.prototype.forEach.call(labels, function (label) {
+         if(label.getAttribute('for') === attr) {
+            label.style.display = 'inline-block';
+         }
+      })
+   } else {
+      let attr = hidden.getAttribute('id');
+      console.log(attr);
+      Array.prototype.forEach.call(labels, function (label) {
+         if(label.getAttribute('for') === attr) {
+            label.style.display = 'none';
+         }
+      })
+   }
+}))
