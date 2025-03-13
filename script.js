@@ -678,8 +678,8 @@ const ol = document.querySelectorAll('.ol');
 let errorTrack = document.createElement('p');
 liNumber.after(errorTrack);
 
-liNumber.addEventListener('input', function (e) {
-   if (/^\d+$/.test(e.key)) {
+liNumber.addEventListener('keypress', function (e) {
+   if (!/(?<!-)\d+/g.test(e.key)) {
       e.preventDefault();
    }
    const olArr = Array.from(ol);
@@ -740,4 +740,29 @@ close.forEach(button => {
    button.addEventListener('click', function () {
       button.closest('div').style.display = 'none';
    })
+})
+//45/////////////////////////////////////////////////////////////////
+const countriesString = document.querySelector('#countriesString');
+const getList = document.querySelector('#getList');
+const ul = document.querySelector('.ul');
+
+countriesString.addEventListener('keypress', function (e) {
+   if (!/[\sa-zа-яё,-]/i.test(e.key)) {
+      e.preventDefault();
+   }
+})
+
+getList.addEventListener('click', function () {
+   let values = countriesString.value.split(',').filter(Boolean);
+   console.log(values);
+   if(ul.childNodes.length !== 0) {
+      let children = document.querySelectorAll('.li');
+      children.forEach(child => child.remove());
+   }
+   for (value of values) {
+      let li = document.createElement('li');
+      li.setAttribute('class', 'li');
+      li.textContent = value;
+      ul.append(li);
+   }
 })
