@@ -698,3 +698,38 @@ liNumber.addEventListener('input', function (e) {
       }
    }
 })
+//43///////////////////////////////////////////////////////////////////
+const manipulatedParagraph = document.querySelector('#manipulatedParagraph');
+const manipulations = document.querySelectorAll('.manipulations');
+
+manipulations.forEach(manipulation => {
+   manipulation.addEventListener('change', function () {
+      let name = manipulation.getAttribute('name');
+      if (manipulation.checked) {
+         console.log(name);
+         switch (name) {
+            case 'red' :
+               manipulatedParagraph.style.color = 'red';
+               break;
+            case 'bold' :
+               manipulatedParagraph.style.fontWeight = 'bold';
+               break;
+            case 'crossOut' :
+               manipulatedParagraph.style.textDecoration = 'line-through';
+               break;
+         }
+      }  else {
+         switch (name) {
+            case 'red' :
+               manipulatedParagraph.style.removeProperty('color');
+               break;
+            case 'bold' :
+               manipulatedParagraph.style.fontWeight = 'normal';
+               break;
+            case 'crossOut' :
+               manipulatedParagraph.style.textDecoration = 'none';
+               break;
+         }
+      }
+   })
+})
