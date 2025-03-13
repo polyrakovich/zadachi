@@ -678,8 +678,10 @@ const ol = document.querySelectorAll('.ol');
 let errorTrack = document.createElement('p');
 liNumber.after(errorTrack);
 
-liNumber.addEventListener('input', function () {
-   console.log(liNumber.value);
+liNumber.addEventListener('input', function (e) {
+   if (/^\d+$/.test(e.key)) {
+      e.preventDefault();
+   }
    const olArr = Array.from(ol);
    let index = +liNumber.value - 1;
    let liValue = liNumber.value;
