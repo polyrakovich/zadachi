@@ -31,3 +31,9 @@
     display: grid;
     grid-template-rows: repeat(4, 1fr);
 }
+.textDiv {
+    padding: 10px;
+}
+#cut {
+    margin: 10px;
+}

@@ -786,3 +786,16 @@ function createListOfCountries() {
   }
   countriesList.value = '';
 }
+//47///////////////////////////////////////////////////////////
+const textDiv = document.querySelectorAll('.textDiv');
+const cut = document.querySelector('#cut');
+
+cut.addEventListener('click', function () {
+   let cropped = '';
+   Array.from(textDiv, function (el) {
+      let deleted = el.length - 2;
+      cropped = el.textContent.trim().slice(0, 10);
+      console.log(cropped);
+      el.textContent = cropped + '...';
+   });
+})
