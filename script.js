@@ -803,11 +803,21 @@ const tableNumbers = document.querySelectorAll('.tableNumber > td');
 const colorNumbers = document.querySelector('#colorNumber');
 
 colorNumbers.addEventListener('click', function () {
-   let numbers = Array.from(tableNumbers, el => el.textContent);
+   const numbers = Array.from(tableNumbers, el => el.textContent);
    let resultMax =  Math.max.apply(null, numbers);
    //применяем стиль к ячейке
    tableNumbers.forEach(td => {
       if (td.textContent === resultMax.toString()) {
          td.style.backgroundColor = 'red';
    }})
+})
+//49///////////////////////////////////////////////////////
+const tableCells = document.querySelectorAll('.tableCells > td');
+const getString = document.querySelector('#getString');
+const numbersFromTable = document.querySelector('#numbersFromTable');
+
+getString.addEventListener('click', function () {
+   const cells = Array.from(tableCells, cell => cell.textContent);
+   console.log(cells);
+   numbersFromTable.value = cells.sort((a, b) => a - b).join(', ');
 })
