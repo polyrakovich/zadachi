@@ -793,9 +793,21 @@ const cut = document.querySelector('#cut');
 cut.addEventListener('click', function () {
    let cropped = '';
    Array.from(textDiv, function (el) {
-      let deleted = el.length - 2;
       cropped = el.textContent.trim().slice(0, 10);
       console.log(cropped);
       el.textContent = cropped + '...';
    });
+})
+//48///////////////////////////////////////////////////////////
+const tableNumbers = document.querySelectorAll('.tableNumber > td');
+const colorNumbers = document.querySelector('#colorNumber');
+
+colorNumbers.addEventListener('click', function () {
+   let numbers = Array.from(tableNumbers, el => el.textContent);
+   let resultMax =  Math.max.apply(null, numbers);
+   //применяем стиль к ячейке
+   tableNumbers.forEach(td => {
+      if (td.textContent === resultMax.toString()) {
+         td.style.backgroundColor = 'red';
+   }})
 })
