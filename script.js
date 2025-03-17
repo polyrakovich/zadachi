@@ -678,7 +678,7 @@ const ol = document.querySelectorAll('.ol');
 let errorTrack = document.createElement('p');
 liNumber.after(errorTrack);
 
-liNumber.addEventListener('keypress', function (e) {
+liNumber.addEventListener('keyup', function (e) {
    if (!/(?<!-)\d+/g.test(e.key)) {
       e.preventDefault();
    }
