@@ -754,7 +754,6 @@ countriesString.addEventListener('keypress', function (e) {
 
 getList.addEventListener('click', function () {
    let values = countriesString.value.split(',').filter(Boolean);
-   console.log(values);
    if(ul.childNodes.length !== 0) {
       let children = document.querySelectorAll('.li');
       children.forEach(child => child.remove());
@@ -766,3 +765,24 @@ getList.addEventListener('click', function () {
       ul.append(li);
    }
 })
+//46////////////////////////////////////////////////////////////////
+const countriesList = document.querySelector('#countriesList');
+const createList = document.querySelector('#createList');
+
+countriesList.addEventListener('keypress', function (e) {
+   if (e.which === 13) {
+      createListOfCountries();
+   } else if(!/[\sa-zа-яё,-]/i.test(e.key)) {
+      e.preventDefault();
+   }
+})
+
+function createListOfCountries() {
+  let country = countriesList.value;
+  if (createList.childNodes.length === 0) {
+     createList.append(country);
+  }else {
+     createList.append(', ' + country);
+  }
+  countriesList.value = '';
+}
