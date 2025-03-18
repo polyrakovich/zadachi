@@ -830,3 +830,33 @@ countryList.forEach(country => {
       country.firstElementChild.classList.toggle('show');
    })
 })
+//54////////////////////////////////////////////////////////////////
+const countriesSelect = document.querySelector('#countriesSelect');
+const citiesSelect = document.querySelector('#citiesSelect');
+const displayData = document.querySelector('#displayData');
+let spanSelectCountry = document.createElement('span');
+let spanSelectCity = document.createElement('span');
+
+const data = {
+   0: ['Брянск', 'Москва', 'Санкт-Петербург'],
+   1: ['Париж', 'Марсель', 'Бордо'],
+   2: ['Рим', 'Милан', 'Флоренция'],
+}
+
+countriesSelect.addEventListener('change', function (e) {
+   citiesSelect.length = 0;
+   spanSelectCity.textContent = '';
+   spanSelectCountry.textContent = e.target.value + ', ';
+   displayData.append(spanSelectCountry);
+   let key = e.target.selectedIndex;
+   let cities = data[key];
+   console.log(cities);
+   for (let i = 0; i < cities.length; i++) {
+      citiesSelect.add(new Option(cities[i]));
+   }
+})
+citiesSelect.addEventListener('change', function (e) {
+   console.log(e.target.value);
+   spanSelectCity.textContent = e.target.value;
+   displayData.append(spanSelectCity);
+})
