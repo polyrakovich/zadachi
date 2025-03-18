@@ -821,3 +821,12 @@ getString.addEventListener('click', function () {
    console.log(cells);
    numbersFromTable.value = cells.sort((a, b) => a - b).join(', ');
 })
+//53/////////////////////////////////////////////////////////////
+const countryList = document.querySelectorAll('.countryList > li');
+
+countryList.forEach(country => {
+   country.addEventListener('click', function () {
+      console.log(country.firstElementChild);
+      country.firstElementChild.classList.toggle('show');
+   })
+})

@@ -40,3 +40,11 @@
 #numbersFromTable {
     width: 20rem;
 }
+
+.cityList {
+    display: none;
+}
+
+.show {
+    display: block;
+}
