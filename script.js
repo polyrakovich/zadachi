@@ -821,6 +821,36 @@ getString.addEventListener('click', function () {
    console.log(cells);
    numbersFromTable.value = cells.sort((a, b) => a - b).join(', ');
 })
+//50//////////////////////////////////////////////////////////////
+const tableSum = document.querySelectorAll('.tableSum');
+let table = document.querySelector('#table > tbody');
+const getTableSum = document.querySelector('#getTableSum');
+
+getTableSum.addEventListener('click', function () {
+   console.log(table.children.length);
+   if (table.children.length <= 3) {
+      let row = table.insertRow();
+      row.classList.add('tableSum');
+      row.style.backgroundColor = 'lightgreen';
+      let array = Array.from(tableSum, el => el.textContent.match(/\d+/g));
+      let resultArr = [];
+      for (let i = 0; i < array.length; i++) {
+         for (let j = 0; j < array[i].length; j++) {
+            if (resultArr[j] === undefined) {
+               resultArr[j] = [];
+            }
+            resultArr[j][i] = array[i][j];
+         }
+      }
+      for (let column of resultArr) {
+         let cell = row.insertCell();
+         let sum = column.reduce(function (currentSum, currentNumber) {
+            return +currentSum + +currentNumber;
+         }, 0)
+         cell.textContent = sum.toString();
+      }
+   }
+})
 //53/////////////////////////////////////////////////////////////
 const countryList = document.querySelectorAll('.countryList > li');
 
