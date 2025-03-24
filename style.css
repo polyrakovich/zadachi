@@ -53,6 +53,23 @@
     display: block;
 }
 
-.tableSum > td {
+.tableSum > td, .td {
+    width: 3rem;
+    height: 2rem;
     padding: 5px;
+}
+
+.activeTd {
+    background-color: indianred;
+}
+
+.inputOut {
+    width: 3rem;
+    height: 2rem;
+}
+
+.tableChanged {
+    display: grid;
+    grid-template-columns:repeat(3, 1fr);
+    cursor: pointer;
 }

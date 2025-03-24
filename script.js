@@ -851,6 +851,49 @@ getTableSum.addEventListener('click', function () {
       }
    }
 })
+//51/////////////////////////////////////////////////////////////
+const tableActivated = document.querySelectorAll('.tableActivated > td');
+const activatedCells = document.querySelector('#activatedCell');
+const activatedCellsSpan = document.createElement('span');
+const remove = document.querySelector('#remove');
+activatedCells.append(activatedCellsSpan);
+
+remove.addEventListener('click', () => {
+   tableActivated.forEach(td => td.classList.remove('activeTd'));
+   activatedCellsSpan.textContent = '';
+})
+tableActivated.forEach(td => td.addEventListener('click', function () {
+   td.classList.toggle('activeTd');
+   let arr = Array.from(tableActivated)
+   let filtered = arr.filter(el => el.classList.contains('activeTd'));
+   console.log(filtered.length);
+   activatedCellsSpan.textContent = filtered.length.toString();
+}))
+//52/////////////////////////////////////////////////////////////
+let tdNode = document.getElementById('tableInputs');
+const save = document.querySelector('#save');
+
+tdNode.addEventListener('mouseup', (event) => {
+   save.style.display = 'block';
+   if (event.target.classList.contains('td')) {
+      event.target.outerHTML = `<input type="number" class="inputOut" value="${event.target.textContent}">`
+   }
+})
+
+
+save.addEventListener('click', () => {
+   let inputs = document.getElementsByClassName('inputOut');
+   if (inputs.length > 0) {
+      for(let input of inputs) {
+         if (input.value !== '') {
+            input.outerHTML = `<td class="td">${input.value}</td>`
+         }else{
+            input.outerHTML = `<td class="td">0</td>`
+         }
+      }
+
+   }
+})
 //53/////////////////////////////////////////////////////////////
 const countryList = document.querySelectorAll('.countryList > li');
 
