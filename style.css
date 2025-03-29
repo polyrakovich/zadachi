@@ -74,11 +74,7 @@
     cursor: pointer;
 }
 
-label, input {
-    cursor: pointer;
-    user-select: none;
-}
-.countryList {
+label, input, .tableActivated, .countryList {
     cursor: pointer;
     user-select: none;
 }

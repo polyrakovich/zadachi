@@ -949,18 +949,18 @@ const data = {
 
 countriesSelect.addEventListener('change', function (e) {
    citiesSelect.length = 0;
-   spanSelectCity.textContent = '';
    spanSelectCountry.textContent = e.target.value + ', ';
    displayData.append(spanSelectCountry);
-   let key = e.target.selectedIndex;
+   displayData.append(spanSelectCity);
+   let key = e.target.selectedIndex - 1;
    let cities = data[key];
+   spanSelectCity.textContent = cities[0];
    console.log(cities);
    for (let i = 0; i < cities.length; i++) {
       citiesSelect.add(new Option(cities[i]));
    }
 })
 citiesSelect.addEventListener('change', function (e) {
-   console.log(e.target.value);
    spanSelectCity.textContent = e.target.value;
-   displayData.append(spanSelectCity);
+
 })
