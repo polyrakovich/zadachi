@@ -36,6 +36,12 @@ const order = document.getElementById('order');
 const sumOfNumbers = document.querySelector('.sumResult');
 const span = document.createElement('span');
 
+order.addEventListener('keypress', function(e) {
+   if (!/[0-9]/.test(e.key)) {
+      e.preventDefault();
+   }
+});
+
 function getSumOfInputNumbers() {
    let orderArray = order.value.split('');
    let orderSum = 0;
@@ -57,17 +63,35 @@ const mean = document.getElementById('mean');
 const meanSum = document.querySelector('.meanSum');
 const meanSumSpan = document.createElement('span');
 
+mean.onclick = function() {
+   mean.classList.remove('negative-value');
+}
+
+mean.addEventListener('keypress', function(e) {
+   if (!/[\d,]/.test(e.key)) {
+      e.preventDefault();
+   }
+})
 //сначала нахожу сумму, потом делю ее на длину массива
 
 function getMeanSum() {
-   let meanArray = mean.value.split(',');
-   let meanSumValue = 0;
-   let meanSumResult = 0;
-   for(let meanItem of meanArray) {
-      meanSumValue += Number(meanItem);
-      meanSumResult = meanSumValue / meanArray.length;
+   mean.value = mean.value.replace(/,+/g, ', ');
+   let meanArray = mean.value.split(',').filter(Boolean);
+   console.log(meanArray);
+   if (!mean.value.includes(',') || meanArray.length <= 1) {
+      mean.classList.add('negative-value');
+      meanSumSpan.textContent = 'Введите числа через запятую';
+
    }
-   meanSumSpan.textContent = meanSumResult.toFixed(2);
+   else {
+      let meanSumValue = 0;
+      let meanSumResult = 0;
+      for (let meanItem of meanArray) {
+         meanSumValue += Number(meanItem);
+         meanSumResult = meanSumValue / meanArray.length;
+      }
+      meanSumSpan.textContent = meanSumResult.toFixed(2);
+   }
    meanSum.appendChild(meanSumSpan);
 }
 
@@ -186,7 +210,7 @@ let date = new Date();
 function getUserAge() {
    if (birthYear.value !== undefined && 1915 <= birthYear.value && birthYear.value <= date) {
       let resultAge = date.getFullYear() - birthYear.value;
-      userAgeResult.innerText = resultAge.toString();
+      userAgeResult.innerText = `${resultAge - 1} или ${resultAge}`;
       userAge.appendChild(userAgeResult);
       console.log(resultAge);
    }
@@ -246,9 +270,15 @@ getMirrorWord.addEventListener('click', isMirror);
 //13/////////////////////////////////////////////////////////////////////
 const includesThree = document.getElementById('includesThree');
 const resultThree = document.getElementById('resultThree');
+const resultThreeSpan = document.createElement('span')
+resultThree.append(resultThreeSpan);
 
 const isThree = function () {
-   return includesThree.value.includes(3) ? resultThree.append('yes') : resultThree.append('no');
+   if (includesThree.value === '') {
+      resultThreeSpan.textContent = 'Введите любое число';
+   }else {
+      return includesThree.value.includes(3) ? resultThreeSpan.textContent = 'yes' : resultThreeSpan.textContent = 'no';
+   }
 }
 
 includesThree.addEventListener('change', isThree);
@@ -423,19 +453,20 @@ const square = document.querySelector('#square');
 function getSquarePerSecond() {
    let value = square.value;
    if (value !== 1 && value !== 0 && value !==  -1) {
-      setInterval(function run() {
+      setTimeout(function run() {
          square.value *= value;
+         setTimeout(run, 1000);
       }, 1000);
    }
 }
-square.addEventListener('blur', getSquarePerSecond);
+square.addEventListener('change', getSquarePerSecond);
 //28/////////////////////////////////////////////////////////////////////
 const randomString = document.querySelector('#randomString');
 const generateRandomString = document.querySelector('#generateRandomString');
 
 generateRandomString.addEventListener('click', function () {
    let result = '';
-   let characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+   const characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
    for (let i = 1; i <= 8; i++) {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
    }
@@ -449,7 +480,7 @@ const stringLength = document.querySelector('#stringLength');
 generateRandomSymbols.addEventListener('click', function () {
    let result = '';
    let length = +stringLength.value;
-   let characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+   const characters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
    for (let i = 1; i <= length; i++) {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
    }
@@ -462,13 +493,14 @@ const generateString = document.querySelector('#generateString');
 const resultString = document.querySelector('#resultString');
 
 function validation() {
-   if (symbolsSubsequence.value.includes(' ')) {
+   if (symbolsSubsequence.value === '' || symbolsSubsequence.value.includes(' ')) {
       symbolsSubsequence.classList.add('negative-value');
       return false;
    } else {
       symbolsSubsequence.classList.remove('negative-value');
       return true;
    }
+
 }
 
 symbolsSubsequence.addEventListener('input', validation);
@@ -479,14 +511,10 @@ generateString.addEventListener('click', function () {
       let result = '';
       let length = +numberOfSymbols.value;
       let characters = symbolsSubsequence.value;
-         if (characters.length >= length) {
-            for (let i = 1; i <= length; i++) {
+         for (let i = 1; i <= length; i++) {
                result += characters.charAt(Math.floor(Math.random() * characters.length));
             }
          resultString.value = result;
-         } else {
-            resultString.value = 'Ошибка';
-         }
    } else {
       resultString.value = 'Введите символы без пробелов';
    }
@@ -497,11 +525,7 @@ colorChanging.style.color = 'red';
 
 function changeColor() {
      setInterval(function run() {
-        if(colorChanging.style.color === 'red') {
-           colorChanging.style.color = 'green';
-        } else {
-           colorChanging.style.color = 'red';
-        }
+        return colorChanging.style.color === 'red' ? colorChanging.style.color = 'green' : colorChanging.style.color = 'red';
      }, 1000);
 }
 
@@ -526,7 +550,7 @@ const colorChangingArray = document.querySelector('#colorChangingArray');
 
 function changeColorFromArray() {
    colorChangingArray.style.color = 'blue';
-   let arr = ['red', 'green', 'blue'];
+   const arr = ['red', 'green', 'blue'];
    let index = 0;
    setInterval(function run() {
       colorChangingArray.style.color = arr[index++];
@@ -538,7 +562,7 @@ window.addEventListener('load', changeColorFromArray);
 //34//////////////////////////////////////////////////////////////////////
 const numberFromArray = document.querySelector('#numberFromArray');
 const nextString = document.querySelector('#nextString');
-let arrayOfNumbers = ['один', 'два', 'три'];
+const arrayOfNumbers = ['один', 'два', 'три'];
 let elemIndex = 0;
 
 window.addEventListener('load', function () {
@@ -552,4 +576,391 @@ function getElementFromArray(event) {
 }
 
 nextString.addEventListener('click', getElementFromArray);
+//35/////////////////////////////////////////////////////////////////
+const counterArray = document.querySelectorAll('.counter');
+let i = 0;
+let num = 0;
 
+function startCount() {
+setInterval(function run() {
+   counterArray[i].value = num + 1;
+   num++;
+   i++;
+   i %= counterArray.length;
+   }, 1000)
+
+}
+
+window.addEventListener('load', startCount);
+//36//////////////////////////////////////////////////////////////////
+const checkboxChecked = document.querySelector('#checkboxChecked');
+const changeCheckbox = document.querySelector('#changeCheckbox');
+
+function changeState (e) {
+   e.preventDefault();
+   return checkboxChecked.checked ? checkboxChecked.removeAttribute('checked') : checkboxChecked.setAttribute('checked', 'checked');
+}
+
+changeCheckbox.addEventListener('click', changeState);
+//37/////////////////////////////////////////////////////////////////
+const checkboxes = document.querySelectorAll('.checkboxUnchecked');
+const addChecked = document.querySelector('#addChecked');
+
+addChecked.addEventListener('click', function () {
+   checkboxes.forEach(checkbox => checkbox.checked = true);
+});
+//38////////////////////////////////////////////////////////////////////
+const radios = document.querySelectorAll('.radios');
+const reply = document.querySelector('#reply');
+const spanRadios = document.createElement('span');
+reply.append(spanRadios);
+let spanArr = [];
+
+radios.forEach(radio => radio.addEventListener('click', function (e) {
+   let result = e.target.getAttribute('id');
+   this.checked=!this.isChecked;
+   console.log(e.target);
+   if (this.checked && !spanArr.includes(result)) {
+      spanArr.push(result);
+   } else {
+      let i = spanArr.indexOf(result);
+      if (i === -1) i = 4;
+      spanArr.splice(i, 1);
+   }
+   spanRadios.textContent = spanArr.join(', ');
+}));
+//39//////////////////////////////////////////////////////////////
+const checks = document.querySelectorAll('.checks');
+const replyCheck = document.querySelector('#replyCheck');
+let spanCheck = document.createElement('span');
+
+let array = [];
+
+checks.forEach(check => check.addEventListener('change', function () {
+   let checked = check.getAttribute('name');
+   if(check.checked && !array.includes(checked)) {
+      array.push(checked);
+      console.log(array);
+
+   } else if (!check.checked && array.includes(checked)) {
+      let i = array.indexOf(checked);
+      array.splice(i, 1);
+   }
+   spanCheck.textContent = array.join(', ');
+   replyCheck.append(spanCheck);
+}))
+//40///////////////////////////////////////////////////////////////
+const whatLang = document.querySelector('#whatLang');
+const visibleInput = document.querySelector('#visibleInput');
+
+whatLang.addEventListener('change', function () {
+   if (whatLang.checked) {
+      visibleInput.style.display = 'inline-block';
+   } else {
+      visibleInput.style.display = 'none';
+   }
+})
+//41////////////////////////////////////////////////////////////////////
+const hiddens = document.querySelectorAll('.hidden');
+const labels = document.querySelectorAll('.visible');
+
+hiddens.forEach(hidden => hidden.addEventListener('change', function () {
+
+   if (hidden.checked) {
+      let attr = hidden.getAttribute('id');
+      console.log(attr);
+      Array.prototype.forEach.call(labels, function (label) {
+         if(label.getAttribute('for') === attr) {
+            label.style.display = 'inline-block';
+         }
+      })
+   } else {
+      let attr = hidden.getAttribute('id');
+      console.log(attr);
+      Array.prototype.forEach.call(labels, function (label) {
+         if(label.getAttribute('for') === attr) {
+            label.style.display = 'none';
+         }
+      })
+   }
+}))
+//42/////////////////////////////////////////////////////////////////
+const liNumber = document.querySelector('#liNumber');
+const ol = document.querySelectorAll('.ol');
+let errorTrack = document.createElement('p');
+liNumber.after(errorTrack);
+
+liNumber.addEventListener('keyup', function (e) {
+   if (!/(?<!-)\d+/g.test(e.key)) {
+      e.preventDefault();
+   }
+   const olArr = Array.from(ol);
+   let index = +liNumber.value - 1;
+   let liValue = liNumber.value;
+   if (liValue > 5 || liValue <= 0 && liValue !== '') {
+      errorTrack.textContent = 'Введите число от 1 до 5';
+   } else {
+      errorTrack.textContent = '';
+   }
+   for (let li of ol) {
+      if (olArr.indexOf(li) === index) {
+         li.style.color = 'red';
+      } else {
+         li.style.color = 'black';
+      }
+   }
+})
+//43///////////////////////////////////////////////////////////////////
+const manipulatedParagraph = document.querySelector('#manipulatedParagraph');
+const manipulations = document.querySelectorAll('.manipulations');
+
+manipulations.forEach(manipulation => {
+   manipulation.addEventListener('change', function () {
+      let name = manipulation.getAttribute('name');
+      if (manipulation.checked) {
+         console.log(name);
+         switch (name) {
+            case 'red' :
+               manipulatedParagraph.style.color = 'red';
+               break;
+            case 'bold' :
+               manipulatedParagraph.style.fontWeight = 'bold';
+               break;
+            case 'crossOut' :
+               manipulatedParagraph.style.textDecoration = 'line-through';
+               break;
+         }
+      }  else {
+         switch (name) {
+            case 'red' :
+               manipulatedParagraph.style.removeProperty('color');
+               break;
+            case 'bold' :
+               manipulatedParagraph.style.fontWeight = 'normal';
+               break;
+            case 'crossOut' :
+               manipulatedParagraph.style.textDecoration = 'none';
+               break;
+         }
+      }
+   })
+})
+//44//////////////////////////////////////////////////////////////////
+const close = document.querySelectorAll('.close');
+
+close.forEach(button => {
+   button.addEventListener('click', function () {
+      button.closest('div').style.display = 'none';
+   })
+})
+//45/////////////////////////////////////////////////////////////////
+const countriesString = document.querySelector('#countriesString');
+const getList = document.querySelector('#getList');
+const ul = document.querySelector('.ul');
+
+countriesString.addEventListener('keypress', function (e) {
+   if (!/[\sa-zа-яё,-]/i.test(e.key)) {
+      e.preventDefault();
+   }
+})
+
+getList.addEventListener('click', function () {
+   let values = countriesString.value.split(',').filter(Boolean);
+   if(ul.childNodes.length !== 0) {
+      let children = document.querySelectorAll('.li');
+      children.forEach(child => child.remove());
+   }
+   for (value of values) {
+      let li = document.createElement('li');
+      li.setAttribute('class', 'li');
+      li.textContent = value;
+      ul.append(li);
+   }
+})
+//46////////////////////////////////////////////////////////////////
+const countriesList = document.querySelector('#countriesList');
+const createList = document.querySelector('#createList');
+
+countriesList.addEventListener('keypress', function (e) {
+   if (e.which === 13 && countriesList.value.length !== 0) {
+      createListOfCountries();
+   } else if(!/[\sa-zа-яё,-]/i.test(e.key)) {
+      e.preventDefault();
+   }
+})
+
+function createListOfCountries() {
+  let country = countriesList.value;
+  if (createList.childNodes.length === 0) {
+     createList.append(country);
+  }else {
+     createList.append(', ' + country);
+  }
+  countriesList.value = '';
+   console.log(country)
+}
+//47///////////////////////////////////////////////////////////
+const textDiv = document.querySelectorAll('.textDiv');
+const cut = document.querySelector('#cut');
+
+cut.addEventListener('click', function () {
+   let cropped = '';
+   Array.from(textDiv, function (el) {
+      cropped = el.textContent.trim().slice(0, 10);
+      console.log(cropped);
+      el.textContent = cropped + '...';
+   });
+})
+//48///////////////////////////////////////////////////////////
+const tableNumbers = document.querySelectorAll('.tableNumber > td');
+const colorNumbers = document.querySelector('#colorNumber');
+
+colorNumbers.addEventListener('click', function () {
+   // let max = 0;
+   // let num = [];
+   // tableNumbers.forEach(el => {
+   //    let num = el.textContent;
+   // });
+   // console.log(num);
+   let numbers = Array.from(tableNumbers, el => el.textContent);
+
+   let max = numbers.reduce((a, b) => a > b ? a : b);
+   console.log(max);
+
+   let resultMax =  Math.max.apply(null, numbers);
+   //применяем стиль к ячейке
+   tableNumbers.forEach(td => {
+      if (td.textContent === resultMax.toString()) {
+         td.style.backgroundColor = 'red';
+   }})
+})
+//49///////////////////////////////////////////////////////
+const tableCells = document.querySelectorAll('.tableCells > td');
+const getString = document.querySelector('#getString');
+const numbersFromTable = document.querySelector('#numbersFromTable');
+
+getString.addEventListener('click', function () {
+   const cells = Array.from(tableCells, cell => cell.textContent);
+   console.log(cells);
+   numbersFromTable.value = cells.sort((a, b) => a - b).join(', ');
+})
+//50//////////////////////////////////////////////////////////////
+const tableSum = document.querySelectorAll('.tableSum');
+let table = document.querySelector('#table > tbody');
+const getTableSum = document.querySelector('#getTableSum');
+
+getTableSum.addEventListener('click', function () {
+   if (table.children.length <= 3) {
+      let newArr = [];
+      let oldArr = Array.from(tableSum, el => el.textContent.match(/\d+/g));
+      let num = 0;
+      for (let i = 0; i < oldArr.length; i++) {
+         console.log(oldArr[i]);
+         for (let j = 0; j < oldArr.length; j++) {
+            num = +oldArr[i][j];
+            console.log(num);
+         }
+      }
+      // let row = table.insertRow();
+      // row.classList.add('tableSum');
+      // row.style.backgroundColor = 'lightgreen';
+      // let array = Array.from(tableSum, el => el.textContent.match(/\d+/g));
+      // let resultArr = [];
+      // for (let i = 0; i < array.length; i++) {
+      //    for (let j = 0; j < array[i].length; j++) {
+      //       if (resultArr[j] === undefined) {
+      //          resultArr[j] = [];
+      //       }
+      //       resultArr[j][i] = array[i][j];
+      //
+      //    }
+      // }
+      //
+      // for (let column of resultArr) {
+      //    let cell = row.insertCell();
+      //    let sum = column.reduce(function (currentSum, currentNumber) {
+      //       return +currentSum + +currentNumber;
+      //    }, 0)
+      //    cell.textContent = sum.toString();
+      // }
+      // console.log(row);
+
+   }
+})
+//51/////////////////////////////////////////////////////////////
+const tableActivated = document.querySelectorAll('.tableActivated > td');
+const activatedCells = document.querySelector('#activatedCell');
+const activatedCellsSpan = document.createElement('span');
+const remove = document.querySelector('#remove');
+activatedCells.append(activatedCellsSpan);
+
+remove.addEventListener('click', () => {
+   tableActivated.forEach(td => td.classList.remove('activeTd'));
+   activatedCellsSpan.textContent = '';
+})
+tableActivated.forEach(td => td.addEventListener('click', function () {
+   td.classList.toggle('activeTd');
+   let arr = Array.from(tableActivated)
+   let filtered = arr.filter(el => el.classList.contains('activeTd'));
+   console.log(filtered.length);
+   activatedCellsSpan.textContent = filtered.length.toString();
+}))
+//52/////////////////////////////////////////////////////////////
+let tdNode = document.getElementById('tableInputs');
+const save = document.querySelector('#save');
+
+tdNode.addEventListener('mouseup', (event) => {
+   save.style.display = 'block';
+   if (event.target.classList.contains('td')) {
+      event.target.outerHTML = `<input type="number" class="inputOut" value="${event.target.textContent}">`
+   }
+})
+
+save.addEventListener('click', () => {
+   let inputs = document.querySelectorAll('.inputOut');
+   if (inputs.length > 0) {
+      for(let input of inputs) {
+         input.outerHTML = `<td class="td">${input.value.length > 0 ? input.value : 0}</td>`
+      }
+      console.log(inputs)
+   }
+})
+//53/////////////////////////////////////////////////////////////
+const countryList = document.querySelectorAll('.countryList > li');
+
+countryList.forEach(country => {
+   country.addEventListener('click', function () {
+      console.log(country.firstElementChild);
+      country.firstElementChild.classList.toggle('show');
+   })
+})
+//54////////////////////////////////////////////////////////////////
+const countriesSelect = document.querySelector('#countriesSelect');
+const citiesSelect = document.querySelector('#citiesSelect');
+const displayData = document.querySelector('#displayData');
+let spanSelectCountry = document.createElement('span');
+let spanSelectCity = document.createElement('span');
+
+const data = {
+   0: ['Брянск', 'Москва', 'Санкт-Петербург'],
+   1: ['Париж', 'Марсель', 'Бордо'],
+   2: ['Рим', 'Милан', 'Флоренция'],
+}
+
+countriesSelect.addEventListener('change', function (e) {
+   citiesSelect.length = 0;
+   spanSelectCountry.textContent = e.target.value + ', ';
+   displayData.append(spanSelectCountry);
+   displayData.append(spanSelectCity);
+   let key = e.target.selectedIndex - 1;
+   let cities = data[key];
+   spanSelectCity.textContent = cities[0];
+   console.log(cities);
+   for (let i = 0; i < cities.length; i++) {
+      citiesSelect.add(new Option(cities[i]));
+   }
+})
+citiesSelect.addEventListener('change', function (e) {
+   spanSelectCity.textContent = e.target.value;
+
+})
