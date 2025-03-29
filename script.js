@@ -816,7 +816,17 @@ const tableNumbers = document.querySelectorAll('.tableNumber > td');
 const colorNumbers = document.querySelector('#colorNumber');
 
 colorNumbers.addEventListener('click', function () {
-   const numbers = Array.from(tableNumbers, el => el.textContent);
+   // let max = 0;
+   // let num = [];
+   // tableNumbers.forEach(el => {
+   //    let num = el.textContent;
+   // });
+   // console.log(num);
+   let numbers = Array.from(tableNumbers, el => el.textContent);
+
+   let max = numbers.reduce((a, b) => a > b ? a : b);
+   console.log(max);
+
    let resultMax =  Math.max.apply(null, numbers);
    //применяем стиль к ячейке
    tableNumbers.forEach(td => {
@@ -840,28 +850,41 @@ let table = document.querySelector('#table > tbody');
 const getTableSum = document.querySelector('#getTableSum');
 
 getTableSum.addEventListener('click', function () {
-   console.log(table.children.length);
    if (table.children.length <= 3) {
-      let row = table.insertRow();
-      row.classList.add('tableSum');
-      row.style.backgroundColor = 'lightgreen';
-      let array = Array.from(tableSum, el => el.textContent.match(/\d+/g));
-      let resultArr = [];
-      for (let i = 0; i < array.length; i++) {
-         for (let j = 0; j < array[i].length; j++) {
-            if (resultArr[j] === undefined) {
-               resultArr[j] = [];
-            }
-            resultArr[j][i] = array[i][j];
+      let newArr = [];
+      let oldArr = Array.from(tableSum, el => el.textContent.match(/\d+/g));
+      let num = 0;
+      for (let i = 0; i < oldArr.length; i++) {
+         console.log(oldArr[i]);
+         for (let j = 0; j < oldArr.length; j++) {
+            num = +oldArr[i][j];
+            console.log(num);
          }
       }
-      for (let column of resultArr) {
-         let cell = row.insertCell();
-         let sum = column.reduce(function (currentSum, currentNumber) {
-            return +currentSum + +currentNumber;
-         }, 0)
-         cell.textContent = sum.toString();
-      }
+      // let row = table.insertRow();
+      // row.classList.add('tableSum');
+      // row.style.backgroundColor = 'lightgreen';
+      // let array = Array.from(tableSum, el => el.textContent.match(/\d+/g));
+      // let resultArr = [];
+      // for (let i = 0; i < array.length; i++) {
+      //    for (let j = 0; j < array[i].length; j++) {
+      //       if (resultArr[j] === undefined) {
+      //          resultArr[j] = [];
+      //       }
+      //       resultArr[j][i] = array[i][j];
+      //
+      //    }
+      // }
+      //
+      // for (let column of resultArr) {
+      //    let cell = row.insertCell();
+      //    let sum = column.reduce(function (currentSum, currentNumber) {
+      //       return +currentSum + +currentNumber;
+      //    }, 0)
+      //    cell.textContent = sum.toString();
+      // }
+      // console.log(row);
+
    }
 })
 //51/////////////////////////////////////////////////////////////
@@ -893,18 +916,13 @@ tdNode.addEventListener('mouseup', (event) => {
    }
 })
 
-
 save.addEventListener('click', () => {
-   let inputs = document.getElementsByClassName('inputOut');
+   let inputs = document.querySelectorAll('.inputOut');
    if (inputs.length > 0) {
       for(let input of inputs) {
-         if (input.value !== '') {
-            input.outerHTML = `<td class="td">${input.value}</td>`
-         }else{
-            input.outerHTML = `<td class="td">0</td>`
-         }
+         input.outerHTML = `<td class="td">${input.value.length > 0 ? input.value : 0}</td>`
       }
-
+      console.log(inputs)
    }
 })
 //53/////////////////////////////////////////////////////////////

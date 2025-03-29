@@ -78,3 +78,7 @@ label, input {
     cursor: pointer;
     user-select: none;
 }
+.countryList {
+    cursor: pointer;
+    user-select: none;
+}
