@@ -782,7 +782,7 @@ const countriesList = document.querySelector('#countriesList');
 const createList = document.querySelector('#createList');
 
 countriesList.addEventListener('keypress', function (e) {
-   if (e.which === 13) {
+   if (e.which === 13 && countriesList.value.length !== 0) {
       createListOfCountries();
    } else if(!/[\sa-zа-яё,-]/i.test(e.key)) {
       e.preventDefault();
@@ -797,6 +797,7 @@ function createListOfCountries() {
      createList.append(', ' + country);
   }
   countriesList.value = '';
+   console.log(country)
 }
 //47///////////////////////////////////////////////////////////
 const textDiv = document.querySelectorAll('.textDiv');
