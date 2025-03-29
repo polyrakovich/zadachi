@@ -612,16 +612,28 @@ addChecked.addEventListener('click', function () {
 //38////////////////////////////////////////////////////////////////////
 const radios = document.querySelectorAll('.radios');
 const reply = document.querySelector('#reply');
+const spanRadios = document.createElement('span');
+reply.append(spanRadios);
+let spanArr = [];
 
-radios.forEach(radio => radio.addEventListener('change', function () {
-   if (radio.checked) {
-      reply.append(radio.getAttribute('id') + ' ');
+radios.forEach(radio => radio.addEventListener('click', function (e) {
+   let result = e.target.getAttribute('id');
+   this.checked=!this.isChecked;
+   console.log(e.target);
+   if (this.checked && !spanArr.includes(result)) {
+      spanArr.push(result);
+   } else {
+      let i = spanArr.indexOf(result);
+      if (i === -1) i = 4;
+      spanArr.splice(i, 1);
    }
+   spanRadios.textContent = spanArr.join(', ');
 }));
 //39//////////////////////////////////////////////////////////////
 const checks = document.querySelectorAll('.checks');
 const replyCheck = document.querySelector('#replyCheck');
-let p = document.createElement('p');
+let spanCheck = document.createElement('span');
+
 let array = [];
 
 checks.forEach(check => check.addEventListener('change', function () {
@@ -634,8 +646,8 @@ checks.forEach(check => check.addEventListener('change', function () {
       let i = array.indexOf(checked);
       array.splice(i, 1);
    }
-   p.textContent = array.join(', ');
-   replyCheck.after(p);
+   spanCheck.textContent = array.join(', ');
+   replyCheck.append(spanCheck);
 }))
 //40///////////////////////////////////////////////////////////////
 const whatLang = document.querySelector('#whatLang');
